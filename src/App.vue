@@ -13,8 +13,8 @@
                   Home
               </Menu-item>
               <div class="search">
-                <Tooltip content="最少输入三个字符" class="Fr">
-                  <i-Input v-model="search" placeholder="输入应用名称" style="width:192px;font-size:14px;"></Icon>></i-Input>
+                <Tooltip content="最少输入三个字符" :disabled="disabled" class="Fr">
+                  <i-Input v-model="search" placeholder="输入应用名称" @on-blur="listBlur" @on-focus="listFocus" style="width:192px;font-size:14px;"></Icon>></i-Input>
                 </Tooltip>
                 <Dropdown trigger="custom" :visible="visible" style="display:block;">
                     <Dropdown-menu slot="list">
@@ -41,45 +41,62 @@ export default {
     return{
       search: '',
       json : {},
-      apiUrl : 'http://rp.dawoea.info/v2/index',
+      apiUrl : 'http://api.dawoea.net/v2/index',
       spinShow:true,
       visible:false,
-      retSearch:[]
+      retSearch:[],
+      disabled:false
     }
   },
   watch:{
     search:function(){
-      this.getSearch()
+      if(this.search.length>2){
+        this.getSearch()
+        this.disabled=true
+      }else{
+        this.visible=false
+        this.retSearch=[]
+        this.disabled=false
+      }
     }
   },
   methods:{
     get: function(URL){
       this.$http.get(this.apiUrl).then(res =>{
         this.json = res.data.data
-        console.log(this.json.hot)
         this.setBackground(this.json.background)
         setTimeout(setBackground=> {//延迟半秒调用
           this.spinShow=false
         }, 500)
       })
-      .catch(function(err){
+      .catch(err=>{
         console.log(err)
-        alert("请求失败")
+        this.$Message.error('请求失败!')
       })
     },
     setBackground(url){//设置背景
       document.getElementsByTagName("body")[0].setAttribute("style","background:#1b2838 url("+url+") no-repeat;background-size:cover;")
     },
     getSearch:function(){
-      var url = "https://api.addones.net/v2/search/apps?keywords="+this.search+"&method=game"
+      var url = "http://api.dawoea.net/v2/search/apps?keywords="+this.search+"&method=game"
       this.$http.get(url).then(res =>{
-        this.retSearch = res.data.data //结果赋值到 retSearch
-        this.search!=''?this.visible=true:this.visible=false //显示列表框
-        console.log(this.json.hot)
-      }).catch(function(){
+        this.retSearch = res.data.count>9?res.data.data.slice(1,10):this.retSearch = res.data.data //判断是否大于9个结果并赋值
+        this.visible = res.data.code==200?true:false //显示列表
+        if(res.data.code == 404&res.data.msg=="not found"){
+          this.$Message.error('未找到此款游戏')
+        }
+      }).catch(err=>{
         console.log(err)
-        alert("请求失败")
+        this.$Message.error('请求失败!')
       })
+    },
+    listBlur : function(){
+      this.visible=false
+    },
+    listFocus : function(){
+      if(this.retSearch.length!=0){
+        this.visible=true
+      }
     }
   },
   created(){
