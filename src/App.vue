@@ -51,12 +51,17 @@ export default {
   watch:{
     search:function(){
       if(this.search.length>2){
-        this.getSearch()
-        this.disabled=true
+        this.disabled=true//关闭文字提示
+
+        //防止频繁调用 500毫秒
+        clearTimeout(this.timeId)
+        this.timeId = setTimeout(()=>{
+          this.getSearch()
+        },500)
       }else{
-        this.visible=false
-        this.retSearch=[]
-        this.disabled=false
+        this.visible=false//隐藏列表框
+        this.retSearch=[]//清空搜索结果数组
+        this.disabled=false//打开文字提示
       }
     }
   },
