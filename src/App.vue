@@ -50,11 +50,10 @@ export default {
   },
   watch:{
     search:function(){
+      clearTimeout(this.timeId)
       if(this.search.length>2){
         this.disabled=true//关闭文字提示
-
         //防止频繁调用 500毫秒
-        clearTimeout(this.timeId)
         this.timeId = setTimeout(()=>{
           this.getSearch()
         },500)
