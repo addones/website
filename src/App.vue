@@ -270,13 +270,7 @@
   }
 
   .ivu-menu-horizontal {
-    height: 42px;
-    line-height: 42px;
     position:fixed;
     width:100%;
-  }
-
-  .ivu-menu-dark {
-    background: rgba(27, 28, 29, 0.25);
   }
 </style>
