@@ -138,6 +138,10 @@
     .search {
       float: left
     }
+
+    .ivu-menu-dark {
+      background: rgba(27, 28, 29, 0.6);
+    }
   }
   /* 中等屏幕（桌面显示器，大于768  小于992） */
 
@@ -241,6 +245,8 @@
     display: inline-block;
     /* width:435px; */
     width: 100%;
+    border-radius:4px;
+    overflow:hidden;
   }
 
   .item li a:hover {
@@ -266,6 +272,8 @@
   .ivu-menu-horizontal {
     height: 42px;
     line-height: 42px;
+    position:fixed;
+    width:100%;
   }
 
   .ivu-menu-dark {
