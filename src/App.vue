@@ -16,7 +16,7 @@
                 <Tooltip content="最少输入三个字符" :disabled="disabled" class="Fr">
                   <i-Input v-model="search" placeholder="输入应用名称" @on-blur="listBlur" @on-focus="listFocus" style="width:192px;font-size:14px;"></Icon>></i-Input>
                 </Tooltip>
-                <Dropdown trigger="custom" :visible="visible" style="display:block;">
+                <Dropdown trigger="custom" :visible="visible" style="display:block;" placement="bottom-start">
                     <Dropdown-menu slot="list">
                       <Dropdown-item v-for="item in retSearch">{{item.name}}</Dropdown-item>
                   </Dropdown-menu>
@@ -65,6 +65,9 @@ export default {
       }
     }
   },
+  created(){
+    this.get()
+  },
   methods:{
     get: function(URL){
       this.$http.get(this.apiUrl).then(res =>{
@@ -95,17 +98,14 @@ export default {
         this.$Message.error('请求失败!')
       })
     },
-    listBlur : function(){
-      this.visible=false
+    listBlur : function(){ //search 搜索框失去焦点
+      this.visible=false //隐藏列表框
     },
-    listFocus : function(){
-      if(this.retSearch.length!=0){
-        this.visible=true
+    listFocus : function(){ //search 搜索框获得焦点
+      if(this.retSearch.length!=0){//判断搜索结果是否大于0
+        this.visible=true //0 并且显示
       }
     }
-  },
-  created(){
-    this.get()
   }
 }
 </script>
