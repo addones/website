@@ -41,7 +41,7 @@ export default {
     return{
       search: '',
       json : {},
-      apiUrl : 'http://api.dawoea.net/v2/index',
+      apiUrl : 'http://api.addones.net/v2/index',
       spinShow:true,
       visible:false,
       retSearch:[],
@@ -85,7 +85,7 @@ export default {
       document.getElementsByTagName("body")[0].setAttribute("style","background:#1b2838 url("+url+") no-repeat;background-size:cover;")
     },
     getSearch:function(){
-      var url = "http://api.dawoea.net/v2/search/apps?keywords="+this.search+"&method=game"
+      var url = "http://api.addones.net/v2/search/apps?keywords="+this.search+"&method=game"
       this.$http.get(url).then(res =>{
         this.retSearch = res.data.count>9?res.data.data.slice(1,10):this.retSearch = res.data.data //判断是否大于9个结果并赋值
         this.visible = res.data.code==200?true:false //显示列表
