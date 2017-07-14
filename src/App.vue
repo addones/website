@@ -56,7 +56,7 @@
           //防止频繁调用 500毫秒
           this.timeId = setTimeout(() => {
             this.getSearch()
-          }, 500)
+          }, 400)
         } else {
           this.visible = false//隐藏列表框
           this.retSearch = []//清空搜索结果数组
