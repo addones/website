@@ -28,7 +28,7 @@
 
     <div class="content">
       <ul class="item">
-        <li v-for="(item,index) in json.hot"><a href="#"><img :src="'https://icdn.static.dawoea.net/steam/apps/'+item+'/header.jpg'" alt=""></a></li>
+        <li v-for="(item,index) in json.hot"><a href="#"><img :src="'https://icdn.static.dawoea.net/steam/apps/'+item.appid+'/header.jpg'" alt=""></a></li>
       </ul>
     </div>
   </div>
@@ -41,7 +41,7 @@
       return {
         search: '',
         json: {},
-        apiUrl: 'http://api.dawoea.net/v2/index',
+        apiUrl: 'https://api.addones.net/v2/index',
         spinShow: true,
         visible: false,
         retSearch: [],
@@ -89,7 +89,7 @@
         document.getElementsByTagName("body")[0].setAttribute("style", "background:#1b2838 url(" + url + ") no-repeat;background-size:cover;")
       },
       getSearch: function () {
-        var url = "http://api.dawoea.net/v2/search/apps?keywords=" + this.search + "&method=game"
+        var url = "https://api.addones.net/v2/search/apps?keywords=" + this.search + "&method=game"
         this.$http.get(url).then(res => {
           this.retSearch = res.data.count > 9 ? res.data.data.slice(1, 10) : this.retSearch = res.data.data //判断是否大于9个结果并赋值
           this.visible = res.data.code == 200 ? true : false //显示列表
