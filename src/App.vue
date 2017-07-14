@@ -28,7 +28,7 @@
 
       <div class="content">
         <ul class="item">
-          <li v-for="(item,index) in json.hot"><a href="#"><img :src="'https://icdn.static.dawoea.net/steam/apps/'+item+'/header.jpg'" alt="" width="430" height="190"></a></li>
+          <li v-for="(item,index) in json.hot"><a href="#"><img :src="'https://icdn.static.dawoea.net/steam/apps/'+item+'/header.jpg'" alt=""></a></li>
         </ul>
       </div>
   </div>
@@ -74,11 +74,15 @@ export default {
         this.setBackground(this.json.background)
         setTimeout(setBackground=> {//延迟半秒调用
           this.spinShow=false
-        }, 500)
+        }, 400)
       })
       .catch(err=>{
         console.log(err)
-        this.$Message.error('请求失败!')
+        this.$Notice.error({
+          title: '请求失败',
+          desc: '您可以尝试刷新网页，或者联系开发人员',
+          duration: 0
+        })
       })
     },
     setBackground(url){//设置背景
@@ -94,7 +98,11 @@ export default {
         }
       }).catch(err=>{
         console.log(err)
-        this.$Message.error('请求失败!')
+        this.$Notice.error({
+          title: '请求失败',
+          desc: '您可以尝试重新搜索',
+          duration: 4
+        })
       })
     },
     listBlur : function(){ //search 搜索框失去焦点
@@ -110,6 +118,67 @@ export default {
 </script>
 
 <style>
+
+/* 小屏幕（平板，大于等于 768px） */
+@media screen and (max-width: 400px) {
+  .layout-nav{
+    width:100%;
+    padding-right:15px;
+  }
+  .item{
+    width:98%;
+    margin:15px auto 0;
+  } 
+
+  .item li{
+    width:98%;
+  }
+
+  .search{
+    float:left
+  }
+}
+
+/* 中等屏幕（桌面显示器，大于768  小于992） */
+@media screen and (min-width: 768px) and (max-width: 992px) {
+  .layout-nav{
+    width:100%;
+    padding-right:20px;
+  }
+  .item{
+    width:100%;
+    margin:15px auto 0;
+  } 
+
+  .item li{
+    width:48%;
+  }
+
+  .search{
+    float:left
+  }
+
+}
+
+/* 大屏幕（大桌面显示器，大于等于 1200px） */
+@media screen and (min-width: 1200px) {
+  .layout-nav{
+    width:1127px
+  }
+
+  .item{
+    width:1137px;
+    margin:75px auto 0;
+  } 
+
+  .item li{
+    width:32%;
+  }
+  
+  .search{
+    float:right;
+  }
+}
 
 .demo-spin-icon-load{
   animation: ani-demo-spin 1s linear infinite;
@@ -146,13 +215,13 @@ body{
 
 .search{
   font-size:0;
-  float:right;
 }
 
 .item{
-  width:1302px;
-  margin:70px auto 0;
+  /* width:1317px; 
+  margin:70px auto 0; */
   font-size:0;
+  text-align:center;
 }
 .item li{
   display:inline-block;
@@ -161,10 +230,17 @@ body{
 
 .item li a{
   display:inline-block;
+  /* width:435px; */
+  width:100%;
 }
 
 .item li a:hover{
   opacity:0.7
+}
+
+.item li a img{
+  width:inherit;
+  height:inherit;
 }
 
 .layout-nav input{
@@ -175,7 +251,6 @@ body{
 }
 
 .layout-nav{
-  width: 1127px;
   margin: 0 auto;
 }
 
