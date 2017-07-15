@@ -28,7 +28,7 @@
 
     <div class="content">
       <ul class="item">
-        <li v-for="(item,index) in img"><a href="#"><img :src="'https://steamcdn.static.addones.net/steam/apps/'+item.appid+'/header.jpg'" :alt="item.name"></a></li>
+        <li v-for="(item,index) in img"><a href="#"><img :src="'https://steamcdn.static.addones.net/steam/apps/'+item.appid+'/header.jpg?jpg'" :alt="item.name"></a></li>
       </ul>
     </div>
   </div>
@@ -94,6 +94,7 @@
       getSearch: function () {
         var url = "https://api.addones.net/v2/search/apps?keywords=" + this.search + "&method=game"
         this.appInfo=[]
+        this.retSearch=[]
         this.$http.get(url).then(res => {
           if(res.data.code===200){//找到
             this.retSearch = res.data.count > 9 ? res.data.data.slice(1, 10) : this.retSearch = res.data.data //判断是否大于9个结果并赋值
@@ -121,6 +122,7 @@
       searchEnter: function (){
         if(this.retSearch!=[]){
           this.img=this.retSearch
+          this.visible = false //隐藏列表框
         }
       },
       getAppInfo: function (appid) {
