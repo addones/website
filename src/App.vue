@@ -119,7 +119,9 @@
         }
       },
       searchEnter: function (){
-       this.img=this.retSearch
+        if(this.retSearch!=[]){
+          this.img=this.retSearch
+        }
       },
       getAppInfo: function (appid) {
         var url = "https://api.addones.net/v2/getAppInfo/"+appid
