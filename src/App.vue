@@ -99,10 +99,6 @@
           if(res.data.code===200){//找到
             this.retSearch = res.data.count > 9 ? res.data.data.slice(1, 10) : this.retSearch = res.data.data //判断是否大于9个结果并赋值
             this.visible = res.data.code == 200 ? true : false //显示列表
-            for(var i=0;i<this.retSearch.length;i++){
-              this.getAppInfo(this.retSearch[i].appid)//读取app info
-            }
-            
           }else if (res.data.code == 404 & res.data.msg == "not found") {//未找到
             this.$Message.error('未找到此款游戏')
           }
