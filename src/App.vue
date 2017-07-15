@@ -74,7 +74,6 @@
         this.$http.get("https://api.addones.net/v2/index").then(res => {
           this.index = res.data.data
           this.img = res.data.data.hot
-          console.log(this.index)
           this.setBackground(this.index.background)
           setTimeout(setBackground => {//延迟半秒调用
             this.spinShow = false //隐藏 longding
@@ -120,7 +119,6 @@
         }
       },
       searchEnter: function (){
-        console.log(this.retSearch)
        this.img=this.retSearch
       },
       getAppInfo: function (appid) {
