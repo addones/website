@@ -28,7 +28,7 @@
 
     <div class="content">
       <ul class="item">
-        <li v-for="(item,index) in img"><a href="#"><img :src="'https://steamcdn.static.addones.net/steam/apps/'+item.appid+'/header.jpg?jpg'" :alt="item.name"></a></li>
+        <li v-for="(item,index) in img"><a href="#"><img :src="'https://steamcdn.static.addones.net/steam/apps/'+item.appid+'/header.jpg'+img_version" :alt="item.name"></a></li>
       </ul>
     </div>
   </div>
@@ -45,8 +45,9 @@
         visible: false,//列表框显示状态
         retSearch: [],//搜索结果
         disabled: false,//三字符提示状态
-        appInfo:[],//app 详细信息
-        img:[]//图片列
+        appInfo: [],//app 详细信息
+        img: [],//图片列
+        img_version: ''
       }
     },
     watch: {
@@ -62,7 +63,7 @@
           this.visible = false//隐藏列表框
           this.retSearch = []//清空搜索结果数组
           this.disabled = false//打开文字提示
-          this.img= this.index.hot
+          this.img = this.index.hot
         }
       }
     },
@@ -71,8 +72,9 @@
     },
     methods: {
       getIndex: function () {
-        this.$http.get("https://api.addones.net/v2/index").then(res => {
+        this.$http.get("https://api.dawoea.net/v2/index").then(res => {
           this.index = res.data.data
+          this.img_version = this.index.img_version
           this.img = res.data.data.hot
           this.setBackground(this.index.background)
           setTimeout(setBackground => {//延迟半秒调用
@@ -92,14 +94,13 @@
         document.getElementsByTagName("body")[0].setAttribute("style", "background:#1b2838 url(" + url + ") no-repeat;background-size:cover;")
       },
       getSearch: function () {
-        var url = "https://api.addones.net/v2/search/apps?keywords=" + this.search + "&method=game"
-        this.appInfo=[]
-        this.retSearch=[]
+        var url = "https://api.dawoea.net/v2/search/apps?keywords=" + this.search + "&method=game"
+        this.appInfo = []
         this.$http.get(url).then(res => {
-          if(res.data.code===200){//找到
+          if (res.data.code === 200) {//找到
             this.retSearch = res.data.count > 9 ? res.data.data.slice(1, 10) : this.retSearch = res.data.data //判断是否大于9个结果并赋值
             this.visible = res.data.code == 200 ? true : false //显示列表
-          }else if (res.data.code == 404 & res.data.msg == "not found") {//未找到
+          } else if (res.data.code == 404 & res.data.msg == "not found") {//未找到
             this.$Message.error('未找到此款游戏')
           }
         }).catch(err => {
@@ -119,14 +120,14 @@
           this.visible = true //0 并且显示
         }
       },
-      searchEnter: function (){
-        if(this.retSearch!=[]){
-          this.img=this.retSearch
+      searchEnter: function () {
+        if (this.visible === true) {
+          this.img = this.retSearch
           this.visible = false //隐藏列表框
         }
       },
       getAppInfo: function (appid) {
-        var url = "https://api.addones.net/v2/getAppInfo/"+appid
+        var url = "https://api.addones.net/v2/getAppInfo/" + appid
         this.$http.get(url).then(res => {
           this.appInfo.push(res.data.data)
         }).catch(err => {
@@ -271,8 +272,8 @@
     display: inline-block;
     /* width:435px; */
     width: 100%;
-    border-radius:4px;
-    overflow:hidden;
+    border-radius: 4px;
+    overflow: hidden;
   }
 
   .item li a:hover {
@@ -298,8 +299,8 @@
   ul.ivu-menu-horizontal {
     height: 42px;
     line-height: 42px;
-    position:fixed;
-    width:100%;
+    position: fixed;
+    width: 100%;
   }
 
   ul.ivu-menu-dark {
