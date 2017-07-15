@@ -71,7 +71,7 @@
     },
     methods: {
       getIndex: function () {
-        this.$http.get("http://api.dawoea.net/v2/index").then(res => {
+        this.$http.get("https://api.addones.net/v2/index").then(res => {
           this.index = res.data.data
           this.img = res.data.data.hot
           console.log(this.index)
@@ -93,7 +93,7 @@
         document.getElementsByTagName("body")[0].setAttribute("style", "background:#1b2838 url(" + url + ") no-repeat;background-size:cover;")
       },
       getSearch: function () {
-        var url = "http://api.dawoea.net/v2/search/apps?keywords=" + this.search + "&method=game"
+        var url = "https://api.addones.net/v2/search/apps?keywords=" + this.search + "&method=game"
         this.appInfo=[]
         this.$http.get(url).then(res => {
           if(res.data.code===200){//找到
@@ -128,7 +128,7 @@
        this.img=this.retSearch
       },
       getAppInfo: function (appid) {
-        var url = "http://api.dawoea.net/v2/getAppInfo/"+appid
+        var url = "https://api.addones.net/v2/getAppInfo/"+appid
         this.$http.get(url).then(res => {
           this.appInfo.push(res.data.data)
         }).catch(err => {
