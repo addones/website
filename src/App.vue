@@ -18,7 +18,7 @@
             </Tooltip>
             <Dropdown trigger="custom" :visible="visible" style="display:block;" placement="bottom-start">
               <Dropdown-menu slot="list">
-                <Dropdown-item v-for="item in retSearch">{{item.name}}</Dropdown-item>
+                <Dropdown-item v-for="item in retSearch" :key="item.appid">{{item.name}}</Dropdown-item>
               </Dropdown-menu>
             </Dropdown>
           </div>
@@ -28,7 +28,7 @@
 
     <div class="content">
       <ul class="item">
-        <li v-for="(item,index) in img"><a href="#"><img :src="'https://steamcdn.static.addones.net/steam/apps/'+item.appid+'/header.jpg'+img_version" :alt="item.name"></a></li>
+        <li v-for="(item,index) in img"><a href="#"><img :src="item.images.header+'!jpg'" :alt="item.name"></a></li>
       </ul>
     </div>
   </div>
@@ -46,8 +46,7 @@
         retSearch: [],//搜索结果
         disabled: false,//三字符提示状态
         appInfo: [],//app 详细信息
-        img: [],//图片列
-        img_version: ''
+        img: {}//图片列
       }
     },
     watch: {
@@ -63,7 +62,7 @@
           this.visible = false//隐藏列表框
           this.retSearch = []//清空搜索结果数组
           this.disabled = false//打开文字提示
-          this.img = this.index.hot
+          this.img = this.index //恢复初始九张图片
         }
       }
     },
@@ -72,11 +71,10 @@
     },
     methods: {
       getIndex: function () {
-        this.$http.get("https://api.dawoea.net/v2/index").then(res => {
+        this.$http.get("https://api.addones.net/api/entrance").then(res => {
           this.index = res.data.data
-          this.img_version = this.index.img_version
-          this.img = res.data.data.hot
-          this.setBackground(this.index.background)
+          this.img = res.data.data
+          this.setBackground(this.index[0].images.background)
           setTimeout(setBackground => {//延迟半秒调用
             this.spinShow = false //隐藏 longding
           }, 400)
@@ -94,13 +92,13 @@
         document.getElementsByTagName("body")[0].setAttribute("style", "background:#1b2838 url(" + url + ") no-repeat;background-size:cover;")
       },
       getSearch: function () {
-        var url = "https://api.dawoea.net/v2/search/apps?keywords=" + this.search + "&method=game"
+        var url = "https://api.addones.net/api/search/app?keywords=" + this.search
         this.appInfo = []
         this.$http.get(url).then(res => {
-          if (res.data.code === 200) {//找到
-            this.retSearch = res.data.count > 9 ? res.data.data.slice(1, 10) : this.retSearch = res.data.data //判断是否大于9个结果并赋值
-            this.visible = res.data.code == 200 ? true : false //显示列表
-          } else if (res.data.code == 404 & res.data.msg == "not found") {//未找到
+          if (res.data.data.length != 0) {//找到
+            this.retSearch = res.data.data.length > 9 ? res.data.data.slice(1, 10) : res.data.data //判断是否大于9个结果并赋值
+            this.visible = res.data.data.length > 0 ? true : false //显示列表
+          } else if (res.data.data.length === 0) {//未找到
             this.$Message.error('未找到此款游戏')
           }
         }).catch(err => {
@@ -127,16 +125,11 @@
         }
       },
       getAppInfo: function (appid) {
-        var url = "https://api.addones.net/v2/getAppInfo/" + appid
+        var url = "https://api.addones.net/v2/getAppInfo/" + appid + "?overview=images,tags"
         this.$http.get(url).then(res => {
           this.appInfo.push(res.data.data)
         }).catch(err => {
-          console.log(err)
-          this.$Notice.error({
-            title: '请求失败',
-            desc: '您可以尝试重新搜索',
-            duration: 4
-          })
+          //console.log(err)
         })
       }
 
@@ -274,6 +267,7 @@
     width: 100%;
     border-radius: 4px;
     overflow: hidden;
+    user-select: none;
   }
 
   .item li a:hover {
