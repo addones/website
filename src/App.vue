@@ -68,6 +68,7 @@
     },
     created() {
       this.getIndex()
+      this.$Loading.config({color:'#1adeb5',height:3})
     },
     methods: {
       getIndex: function () {
@@ -94,12 +95,16 @@
       getSearch: function () {
         var url = "https://api.dawoea.net/api/search/app?keywords=" + this.search
         this.appInfo = []
+        this.$Loading.start()
         this.$http.get(url).then(res => {
           if (res.data.data.length != 0) {//找到
+            this.$Loading.finish()
             this.retSearch = res.data.data.length > 9 ? res.data.data.slice(1, 10) : res.data.data //判断是否大于9个结果并赋值
             this.visible = res.data.data.length > 0 ? true : false //显示列表
           } else if (res.data.data.length === 0) {//未找到
             this.$Message.error('未找到此款游戏')
+            this.retSearch=[]
+            this.$Loading.error()
           }
         }).catch(err => {
           console.log(err)
