@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Spin fix v-show="spinShow">
-      <Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>
+      <Icon type="load-c" size=25 class="spin-icon-load"></Icon>
       <div>Loading</div>
     </Spin>
     <div id="header">
@@ -71,7 +71,7 @@
     },
     methods: {
       getIndex: function () {
-        this.$http.get("https://api.addones.net/api/entrance").then(res => {
+        this.$http.get("https://api.dawoea.net/api/entrance").then(res => {
           this.index = res.data.data
           this.img = res.data.data
           this.setBackground(this.index[0].images.background)
@@ -92,7 +92,7 @@
         document.getElementsByTagName("body")[0].setAttribute("style", "background:#1b2838 url(" + url + ") no-repeat;background-size:cover;")
       },
       getSearch: function () {
-        var url = "https://api.addones.net/api/search/app?keywords=" + this.search
+        var url = "https://api.dawoea.net/api/search/app?keywords=" + this.search
         this.appInfo = []
         this.$http.get(url).then(res => {
           if (res.data.data.length != 0) {//找到
@@ -125,7 +125,7 @@
         }
       },
       getAppInfo: function (appid) {
-        var url = "https://api.addones.net/v2/getAppInfo/" + appid + "?overview=images,tags"
+        var url = "https://api.dawoea.net/v2/getAppInfo/" + appid + "?overview=images,tags"
         this.$http.get(url).then(res => {
           this.appInfo.push(res.data.data)
         }).catch(err => {
@@ -139,72 +139,7 @@
 </script>
 
 <style>
-  /* 小屏幕（平板，大于等于 768px） */
-
-  @media screen and (max-width: 400px) {
-    .layout-nav {
-      width: 100%;
-      padding-right: 15px;
-    }
-    .item {
-      width: 98%;
-      margin: 15px auto 0;
-    }
-
-    .item li {
-      width: 98%;
-    }
-
-    .search {
-      float: left
-    }
-
-    .ivu-menu-dark {
-      background: rgba(27, 28, 29, 0.6);
-    }
-  }
-  /* 中等屏幕（桌面显示器，大于768  小于992） */
-
-  @media screen and (min-width: 768px) and (max-width: 992px) {
-    .layout-nav {
-      width: 100%;
-      padding-right: 20px;
-    }
-    .item {
-      width: 100%;
-      margin: 15px auto 0;
-    }
-
-    .item li {
-      width: 48%;
-    }
-
-    .search {
-      float: left
-    }
-  }
-  /* 大屏幕（大桌面显示器，大于等于 1200px） */
-
-  @media screen and (min-width: 1200px) {
-    .layout-nav {
-      width: 1127px
-    }
-
-    .item {
-      width: 1137px;
-      margin: 75px auto 0;
-    }
-
-    .item li {
-      width: 32%;
-    }
-
-    .search {
-      float: right;
-    }
-  }
-
-  .demo-spin-icon-load {
+  .spin-icon-load {
     animation: ani-demo-spin 1s linear infinite;
   }
 
@@ -247,6 +182,12 @@
 
   .search {
     font-size: 0;
+    position: relative;
+    float:left;
+  }
+
+  .content {
+    padding-top: 12px;
   }
 
   .item {
@@ -254,6 +195,7 @@
   margin:70px auto 0; */
     font-size: 0;
     text-align: center;
+    margin: 0 auto;
   }
 
   .item li {
@@ -300,5 +242,57 @@
 
   ul.ivu-menu-dark {
     background: rgba(27, 28, 29, 0.25);
+  }
+  /* 小屏幕（平板，大于等于 768px） */
+
+  @media screen and (max-width: 400px) {
+    .layout-nav {
+      width: 100%;
+      padding-right: 15px;
+    }
+
+    .item li {
+      width: 98%;
+    }
+
+    ul.ivu-menu-dark {
+      background: rgba(27, 28, 29, 0.6);
+    }
+  }
+  /* 中等屏幕（桌面显示器，大于768  小于992） */
+
+  @media screen and (min-width: 768px) and (max-width: 992px) {
+    .layout-nav {
+      width: 100%;
+      padding-right: 20px;
+    }
+
+    .item li {
+      width: 48%;
+    }
+
+  }
+  /* 大屏幕（大桌面显示器，大于等于 1200px） */
+
+  @media screen and (min-width: 1200px) {
+    .layout-nav {
+      width: 1127px
+    }
+
+    .item {
+      width: 1137px;
+    }
+
+    .item li {
+      width: 32%;
+    }
+
+    .content {
+      padding-top: 85px;
+    }
+
+    .search {
+      float: right
+    }
   }
 </style>
