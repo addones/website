@@ -291,10 +291,11 @@
   }
 
   ul.ivu-menu-horizontal {
+    width: 100%;
     height: 42px;
     line-height: 42px;
     position: fixed;
-    width: 100%;
+    z-index: 99;
   }
 
   ul.ivu-menu-dark {
