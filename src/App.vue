@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Spin fix v-show="spinShow">
-      <Icon type="load-c" size=25 class="spin-icon-load"></Icon>
+      <Icon type="load-c" size="20" class="spin-icon-load"></Icon>
       <div>Loading</div>
     </Spin>
     <div id="header">
