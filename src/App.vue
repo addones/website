@@ -27,9 +27,9 @@
     </div>
 
     <div class="content">
-      <ul class="item">
-        <li v-for="(item,index) in img"><a href="#"><img :src="item.images.header+'!jpg'" :alt="item.name"></a></li>
-      </ul>
+      <Row class-name="item">
+        <Col class-name="list" :xs="24" :sm="12" :lg="8" v-for="(item,index) in img" :key="item.appid"><div class="thumbnail"><a href="#"><img :src="item.images.header+'!jpg'" :alt="item.name"></a></div></Col>
+      </Row>
     </div>
   </div>
 </template>
@@ -191,24 +191,24 @@
     float:left;
   }
 
-  .content {
-    padding-top: 12px;
-  }
-
   .item {
     /* width:1317px; 
   margin:70px auto 0; */
     font-size: 0;
-    text-align: center;
     margin: 0 auto;
+    padding:0 2px
   }
 
-  .item li {
-    display: inline-block;
-    margin: 2px;
+  .item .list {
+    padding: 2px;
+  }
+  
+  .item .list .thumbnail{
+    max-width:380px;
+    margin:0 auto;
   }
 
-  .item li a {
+  .item a {
     display: inline-block;
     /* width:435px; */
     width: 100%;
@@ -217,13 +217,12 @@
     user-select: none;
   }
 
-  .item li a:hover {
+  .item a:hover {
     opacity: 0.7
   }
 
-  .item li a img {
+  .item a img {
     width: inherit;
-    height: inherit;
   }
 
   .layout-nav input {
@@ -234,6 +233,7 @@
   }
 
   .layout-nav {
+    width: 100%;
     margin: 0 auto;
   }
 
@@ -248,48 +248,31 @@
   ul.ivu-menu-dark {
     background: rgba(27, 28, 29, 0.25);
   }
-  /* 小屏幕（平板，大于等于 768px） */
+  /* 小屏幕（手机，大于等于400px） */
 
-  @media screen and (max-width: 400px) {
-    .layout-nav {
-      width: 100%;
-      padding-right: 15px;
-    }
+@media (min-width: 768px) {
 
-    .item li {
-      width: 98%;
+    .item{
+      width:750px;
     }
 
     ul.ivu-menu-dark {
       background: rgba(27, 28, 29, 0.6);
     }
-  }
-  /* 中等屏幕（桌面显示器，大于768  小于992） */
-
-  @media screen and (min-width: 768px) and (max-width: 992px) {
-    .layout-nav {
-      width: 100%;
-      padding-right: 20px;
+    .content {
+      padding-top: 85px;
     }
-
-    .item li {
-      width: 48%;
-    }
-
   }
+
   /* 大屏幕（大桌面显示器，大于等于 1200px） */
 
-  @media screen and (min-width: 1200px) {
+  @media (min-width: 1200px) {
     .layout-nav {
       width: 1127px
     }
 
-    .item {
-      width: 1137px;
-    }
-
-    .item li {
-      width: 32%;
+    .item{
+      width:1127px;
     }
 
     .content {
