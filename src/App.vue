@@ -191,7 +191,7 @@
     float:left;
   }
 
-  .item {
+  .content .item {
     /* width:1317px; 
   margin:70px auto 0; */
     font-size: 0;
