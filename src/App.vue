@@ -191,6 +191,10 @@
     float:left;
   }
 
+  .content {
+    padding-top: 10px;
+  }
+
   .content .item {
     /* width:1317px; 
   margin:70px auto 0; */
@@ -258,9 +262,6 @@
 
     ul.ivu-menu-dark {
       background: rgba(27, 28, 29, 0.6);
-    }
-    .content {
-      padding-top: 85px;
     }
   }
 
