@@ -72,7 +72,7 @@
     },
     methods: {
       getIndex: function () {
-        this.$http.get("https://api.addones.net/api/entrance").then(res => {
+        this.$http.get("https://api.dawoea.net/api/entrance").then(res => {
           this.index = res.data.data
           this.img = res.data.data
           this.setBackground(this.index[0].images.background)
@@ -93,7 +93,7 @@
         document.getElementsByTagName("body")[0].setAttribute("style", "background:#1b2838 url(" + url + ") no-repeat;background-size:cover;")
       },
       getSearch: function () {
-        var url = "https://api.addones.net/api/search/app?keywords=" + this.search
+        var url = "https://api.dawoea.net/api/search/app?keywords=" + this.search
         this.appInfo = []
         this.$Loading.start()
         this.$http.get(url).then(res => {
@@ -130,7 +130,7 @@
         }
       },
       getAppInfo: function (appid) {
-        var url = "https://api.addones.net/v2/getAppInfo/" + appid + "?overview=images,tags"
+        var url = "https://api.dawoea.net/v2/getAppInfo/" + appid + "?overview=images,tags"
         this.$http.get(url).then(res => {
           this.appInfo.push(res.data.data)
         }).catch(err => {
@@ -191,16 +191,12 @@
     float:left;
   }
 
-  .content {
-    padding-top: 10px;
-  }
-
   .content .item {
     /* width:1317px; 
   margin:70px auto 0; */
     font-size: 0;
     margin: 0 auto;
-    padding:0 2px
+    padding:10px 2px 0;
   }
 
   .item .list {
@@ -260,9 +256,6 @@
       width:750px;
     }
 
-    ul.ivu-menu-dark {
-      background: rgba(27, 28, 29, 0.6);
-    }
   }
 
   /* 大屏幕（大桌面显示器，大于等于 1200px） */
@@ -272,11 +265,8 @@
       width: 1127px
     }
 
-    .item{
+    .content .item{
       width:1127px;
-    }
-
-    .content {
       padding-top: 85px;
     }
 
