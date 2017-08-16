@@ -1,35 +1,31 @@
 <template>
   <div id="app">
-    <Spin fix v-show="spinShow">
-      <Icon type="load-c" size="20" class="spin-icon-load"></Icon>
-      <div>Loading</div>
-    </Spin>
-    <div id="header">
+    <div id="layout">
       <Menu mode="horizontal" theme="dark" active-name="1">
         <div class="layout-logo"></div>
         <div class="layout-nav">
-          <Menu-item name="1">
+          <Menu-item name="home">
             <Icon type="ios-home"></Icon>
-            Home
+            <router-link :to="{path:'/Home'}">Home</router-link>
           </Menu-item>
+          <div class="login">
+            <a href="https://account.addones.net/login">Login</a>
+            <a href="https://account.addones.net/register">Register</a>
+          </div>
           <div class="search">
             <Tooltip content="最少输入三个字符" :disabled="disabled" class="Fr">
-              <i-Input v-model="search" placeholder="输入应用名称" @on-blur="searchBlur" @on-focus="searchFocus" @on-enter="searchEnter" style="width:192px;font-size:14px;"></Icon>></i-Input>
+              <Input v-model="search" placeholder="输入应用名称" @on-blur="searchBlur" @on-focus="searchFocus" @on-enter="searchEnter" style="width:192px;font-size:14px;"></Icon>></Input>
             </Tooltip>
-            <Dropdown trigger="custom" :visible="visible" style="display:block;" placement="bottom-start">
+            <Dropdown trigger="custom" :visible="visible" style="display:block;" @on-click="getAppInfo" placement="bottom-start">
               <Dropdown-menu slot="list">
-                <Dropdown-item v-for="item in retSearch" :key="item.appid">{{item.name}}</Dropdown-item>
+                <Dropdown-item v-for="item in retSearch" :key="item.appid" :name="item.appid">{{item.name}}</Dropdown-item>
               </Dropdown-menu>
             </Dropdown>
           </div>
         </div>
       </Menu>
-    </div>
 
-    <div class="content">
-      <Row class-name="item">
-        <Col class-name="list" :xs="24" :sm="12" :lg="8" v-for="(item,index) in img" :key="item.appid"><div class="thumbnail"><a href="#"><img :src="item.images.header+'!jpg'" :alt="item.name"></a></div></Col>
-      </Row>
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -41,12 +37,9 @@
       return {
         search: '',//搜索框 value
         index: {},
-        spinShow: true,//loading 显示状态
         visible: false,//列表框显示状态
         retSearch: [],//搜索结果
         disabled: false,//三字符提示状态
-        appInfo: [],//app 详细信息
-        img: {}//图片列
       }
     },
     watch: {
@@ -67,46 +60,24 @@
       }
     },
     created() {
-      this.getIndex()
       this.$Loading.config({color:'#1adeb5',height:3})
     },
     methods: {
-      getIndex: function () {
-        this.$http.get("https://api.dawoea.net/api/entrance").then(res => {
-          this.index = res.data.data
-          this.img = res.data.data
-          this.setBackground(this.index[0].images.background)
-          setTimeout(setBackground => {//延迟半秒调用
-            this.spinShow = false //隐藏 longding
-          }, 400)
-        })
-          .catch(err => {
-            console.log(err)
-            this.$Notice.error({
-              title: '请求失败',
-              desc: '您可以尝试刷新网页或联系开发人员',
-              duration: 0
-            })
-          })
-      },
-      setBackground(url) {//设置背景
-        document.getElementsByTagName("body")[0].setAttribute("style", "background:#1b2838 url(" + url + ") no-repeat;background-size:cover;")
-      },
       getSearch: function () {
         var url = "https://api.dawoea.net/api/search/app?keywords=" + this.search
         this.appInfo = []
         this.$Loading.start()
-        this.$http.get(url).then(res => {
+        this.$http.get(url).then((res) => {
           if (res.data.data.length != 0) {//找到
             this.$Loading.finish()
-            this.retSearch = res.data.data.length > 9 ? res.data.data.slice(1, 10) : res.data.data //判断是否大于9个结果并赋值
+            this.retSearch = res.data.data.length > 9 ? res.data.data.slice(0, 9) : res.data.data //判断是否大于9个结果并赋值
             this.visible = res.data.data.length > 0 ? true : false //显示列表
           } else if (res.data.data.length === 0) {//未找到
             this.$Message.error('未找到此款游戏')
             this.retSearch=[]
             this.$Loading.error()
           }
-        }).catch(err => {
+        }).catch((err) => {
           console.log(err)
           this.$Notice.error({
             title: '请求失败',
@@ -132,7 +103,7 @@
       getAppInfo: function (appid) {
         var url = "https://api.dawoea.net/v2/getAppInfo/" + appid + "?overview=images,tags"
         this.$http.get(url).then(res => {
-          this.appInfo.push(res.data.data)
+          console.log(res.data.data)
         }).catch(err => {
           //console.log(err)
         })
@@ -144,36 +115,10 @@
 </script>
 
 <style>
-  .spin-icon-load {
-    animation: ani-demo-spin 1s linear infinite;
-  }
-
-  @keyframes ani-demo-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    50% {
-      transform: rotate(180deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  .ivu-spin-main {
-    background: #1b2838;
-    color: #fff;
-  }
-
 
   #app {
     width: 100%;
     height: 100%;
-  }
-
-  #header {
-    width: 100%;
-    height: 42px;
   }
 
   body {
@@ -189,40 +134,6 @@
     font-size: 0;
     position: relative;
     float:left;
-  }
-
-  .content .item {
-    /* width:1317px; 
-  margin:70px auto 0; */
-    font-size: 0;
-    margin: 0 auto;
-    padding:10px 2px 0;
-  }
-
-  .item .list {
-    padding: 2px;
-  }
-  
-  .item .list .thumbnail{
-    max-width:380px;
-    margin:0 auto;
-  }
-
-  .item a {
-    display: inline-block;
-    /* width:435px; */
-    width: 100%;
-    border-radius: 4px;
-    overflow: hidden;
-    user-select: none;
-  }
-
-  .item a:hover {
-    opacity: 0.7
-  }
-
-  .item a img {
-    width: inherit;
   }
 
   .layout-nav input {
@@ -245,17 +156,23 @@
     z-index: 99;
   }
 
+  .layout-breadcrumb{
+    padding: 10px 15px 0;
+  }
+
   ul.ivu-menu-dark {
     background: rgba(27, 28, 29, 0.25);
   }
-  /* 小屏幕（手机，大于等于400px） */
 
-@media (min-width: 768px) {
+  .login{
+    float:right;
+    margin-left:15px
+  }
 
-    .item{
-      width:750px;
-    }
-
+  .login a{
+    display:inline-block;
+    padding:0 8px;
+    color:#fff;
   }
 
   /* 大屏幕（大桌面显示器，大于等于 1200px） */
@@ -263,11 +180,6 @@
   @media (min-width: 1200px) {
     .layout-nav {
       width: 1127px
-    }
-
-    .content .item{
-      width:1127px;
-      padding-top: 85px;
     }
 
     .search {

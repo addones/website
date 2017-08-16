@@ -1,16 +1,21 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
-import indexImg from '@/components/indexImg'
+import Index from '@/components/Index'
+import Home from '@/components/Home'
 
 Vue.use(Router)
 
 export default new Router({
+  mode : 'history',
   routes: [
     {
-      path: '/',
-      name: 'indexImg',
-      component: indexImg
+      path: '',
+      component:Index,
+      //redirect:'/Home'
+    },
+    {
+      path:'/Home',
+      component:Home
     }
   ]
 })
