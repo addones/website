@@ -171,7 +171,7 @@ export default {
   }
 
   #header {
-    width: 100%;
+    min-width: 1280px;
     height: 360px;
     background: #367096;
     text-align: center;
@@ -303,7 +303,7 @@ export default {
   }
 
   #Main {
-    width: 100%;
+    min-width: 1280px;
     background: #183D58;
   }
 
