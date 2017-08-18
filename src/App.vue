@@ -149,6 +149,7 @@
     font-size: 0;
   }
 
+
   #header .Main-Navi .Search .type {
     width: 60px;
     height: 40px;
@@ -191,6 +192,13 @@
     background: #4CC81C;
     border: 0;
     outline: none;
+  }
+
+  .Main-highlight{
+    min-width:1280px;
+    height:215px;
+    padding-top:65px;
+    background:#367096;
   }
 
 </style>

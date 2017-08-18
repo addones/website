@@ -86,12 +86,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 
-  .Main-highlight{
-    height:215px;
-    padding:65px 42px 0;
-    background:#367096;
-  }
-
   .Main-highlight ul{
     width:1194px;
     height:215px;
