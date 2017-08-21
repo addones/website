@@ -67,11 +67,12 @@ export default {
             this.index.push(tem_arr)
             this.index[1].name = "人气作品"
             tem_arr=[]
-          }else if(i===8){
-            this.index.push(tem_arr)
-            this.index[2].name = "高分神作"
-            tem_arr=[]
           }
+          // else if(i===8){
+          //   this.index.push(tem_arr)
+          //   this.index[2].name = "高分神作"
+          //   tem_arr=[]
+          // }
         }
         console.log(this.index)
       })
