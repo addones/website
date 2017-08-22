@@ -9,7 +9,7 @@
         </div>
         <!-- 搜索 -->
         <div class="Search">
-          <form action="#">
+          <form action="/search">
             <div class="type">
 
               <a href="#">
@@ -29,26 +29,9 @@
               </a>
             </div>
             <div class="input">
-              <input type="text" placeholder="搜索推荐内容，如新作或新活动">
+              <input type="text" placeholder="搜索推荐内容，如新作或新活动" v-model="search" name="keywords">
             </div>
-            <button type="submit">
-              <svg width="21px" height="21px" viewBox="0 0 21 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                <!-- Generator: Sketch 46 (44423) - http://www.bohemiancoding.com/sketch -->
-                <title>search</title>
-                <desc>Created with Sketch.</desc>
-                <defs></defs>
-                <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                  <g id="搜索结果页-效果图" transform="translate(-1119.000000, -30.000000)" stroke="#FFFFFF" stroke-width="2">
-                    <g id="Group-2" transform="translate(761.000000, 20.000000)">
-                      <g id="search" transform="translate(359.000000, 11.000000)">
-                        <circle id="Oval" cx="12" cy="7" r="7"></circle>
-                        <path d="M6.5,12.5 L0.479202711,18.5207973" id="Line" stroke-linecap="square"></path>
-                      </g>
-                    </g>
-                  </g>
-                </g>
-              </svg>
-            </button>
+            <router-link :to="{path:'/search',query:{keywords:search}}"  class="iconfont aone-search"></router-link>
           </form>
         </div>
         <!-- 搜索 end -->
@@ -72,7 +55,7 @@
     name: 'app',
     data: function () {
       return {
-
+        search:undefined
       }
     },
     created() {
@@ -86,6 +69,7 @@
 </script>
 
 <style>
+
   * {
     margin: 0;
     padding: 0;
@@ -185,20 +169,35 @@
     color: #cecece;
   }
 
-  #header .Main-Navi .Search button {
+  #header .Main-Navi .Search .aone-search {
     width: 60px;
     height: 40px;
+    line-height:40px;
+    font-size:25px;
     float: left;
     background: #4CC81C;
     border: 0;
     outline: none;
   }
 
-  .Main-highlight{
+  #Main-highlight{
     min-width:1280px;
     height:215px;
     padding-top:65px;
     background:#367096;
+  }
+
+  #Main-Contents {
+    min-width: 1280px;
+    background: #183D58;
+  }
+
+
+  #Main-Contents .Contents {
+    width: 1280px;
+    min-height: 680px;
+    margin: 0 auto;
+    color: #fff;
   }
 
 </style>
