@@ -138,11 +138,15 @@
         float: left;
     }
 
+    #Main-highlight .return{
+        margin-bottom:43px;
+    }
+
     .return{
         display:block;
         width:120px;
         height:40px;
-        margin:0 auto 43px;
+        margin:0 auto;
         font-size:12px;
         line-height:40px;
         text-align:center;
