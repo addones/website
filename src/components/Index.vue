@@ -130,8 +130,9 @@ export default {
   }
 
   .thumbnail {
-    width: 100%;
+    width: 1176px;
     height: 250px;
+    margin:0 auto;
   }
 
   .thumbnail .thumbnail-title {
