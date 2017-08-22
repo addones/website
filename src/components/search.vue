@@ -38,7 +38,7 @@
         </div>
         <div id="Main-Contents">
             <div class="Contents">
-                <div class="Relevant">相关作品</div>
+                <div class="Relevant" v-if="Relevant">相关作品</div>
 
                 <div class="search-result" v-for="item in Relevant">
                     <div class="search-sidebar-platform left">
