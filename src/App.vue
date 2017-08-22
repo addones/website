@@ -9,7 +9,7 @@
         </div>
         <!-- 搜索 -->
         <div class="Search">
-          <form action="/search">
+          <form @submit.prevent="submit">
             <div class="type">
 
               <a href="#">
@@ -62,7 +62,9 @@
       
     },
     methods: {
-
+      submit:function(){
+        this.$router.push({path:"/search",query:{keywords:this.search}})
+      }
     }
   }
 

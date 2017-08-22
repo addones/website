@@ -91,7 +91,6 @@
             }
         },
         created() {
-            console.log(this.$route.query.keywords)
             this.search = this.$route.query.keywords
             if(this.search===undefined || this.search===''){
                 this.$router.push({path:'/'})
@@ -110,6 +109,12 @@
                 }).catch((err) => {
                     console.log(err)
                 })
+            }
+        },
+        watch:{
+            '$route' (to, from) {
+                this.search = to.query.keywords
+                this.getSearch()
             }
         }
     }
