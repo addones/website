@@ -1,7 +1,7 @@
 <template>
 <div>
-  <div class="Main-highlight">
-    <ul>
+  <div id="Main-highlight">
+    <ul class="banner">
       <li class="banner-left">
         <a href="#">
           <img src="https://icdn.static.dawoea.net/steam/apps/585840/header.jpg" alt="">
@@ -87,14 +87,14 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 
-  .Main-highlight ul{
+  #Main-highlight ul.banner{
     width:1194px;
     height:215px;
     margin:0 auto;
     position:relative;    
   }
 
-  .Main-highlight li{
+  #Main-highlight ul.banner li{
     width:368px;
     height: 172px;
     position:absolute;
@@ -104,43 +104,29 @@ export default {
     box-shadow:0 0 35px #000;
   }
 
-  .Main-highlight li img{
+  #Main-highlight ul.banner li img{
     width:368px;
     height:172px;
   }
 
-  .Main-highlight li.banner-left{
+  #Main-highlight ul.banner li.banner-left{
     left:0;
   }
 
-  .Main-highlight li.banner-main{
+  #Main-highlight ul.banner li.banner-main{
     width:460px;
     height:215px;
     left:368px;
     z-index:2;
   }
 
-  .Main-highlight li.banner-main img{
+  #Main-highlight ul.banner li.banner-main img{
     width:460px;
     height:215px;
   }
   
-  .Main-highlight li.banner-right{
+  #Main-highlight ul.banner li.banner-right{
     right:0;
-  }
-
-  #Main-Contents {
-    min-width: 1280px;
-    background: #183D58;
-  }
-
-
-  #Main-Contents .Contents {
-    width: 1176px;
-    height: 800px;
-    margin: 0 auto;
-    color: #fff;
-    padding: 0 52px;
   }
 
   .thumbnail {
@@ -152,7 +138,8 @@ export default {
     width: 100%;
     height: 18px;
     font-size: 12px;
-    padding: 52px 0 10px 0;
+    line-height:12px;
+    padding: 52px 0 6px 0;
     text-align: center;
   }
 
