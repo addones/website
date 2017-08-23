@@ -22,15 +22,15 @@
 
   <div id="Main-Contents">
     <div class="Contents">
-      <div class="thumbnail" v-for="item in index">
-        <div class="thumbnail-title"><span>{{item.name}}</span></div>
+      <div class="thumbnail" v-for="(item,index) in index">
+        <div class="thumbnail-title"><span @click="change(index)">{{item.name}}</span></div>
         <div class="thumbnail-list">
           <ul class="list-item">
-            <li v-for="item in item">
+            <li v-for="item in item.data">
               <a href="#">
-                <img :src="item.images.header" alt="" width="368" height="172">
+                <img :src="'https://icdn.static.dawoea.net/steam/apps/'+item.appid+'/header.jpg'" alt="" width="368" height="172">
                 <div class="thumbnail-info">
-                    <div class="thumbnail-info-name"><span class="name">{{item.name}}</span><span class="thumbnail-info-time">2017/01/01发售</span></div>
+                    <div class="thumbnail-info-name"><span class="name">{{item.name}}</span><span class="thumbnail-info-time">{{item.released}}</span></div>
                 </div>
               </a>
             </li>
@@ -47,7 +47,19 @@ export default {
   name: 'Home',
   data () {
     return {
-      index:[]
+      index:[
+        {
+          name : '近期作品',
+          index:2,
+          data : []
+        },
+        {
+          name : '人气作品',
+          index:2,
+          data : []
+        }
+      ],
+      result:[]
     }
   },
   created(){
@@ -56,29 +68,26 @@ export default {
   methods:{
     getIndex: function () {
       this.$http.get("https://api.dawoea.net/api/entrance").then((res) => {
-        let tem_arr = []
-        for(let i=0;i<res.data.data.length;i++){
-          tem_arr.push(res.data.data[i])
-          if(i===2){
-            this.index.push(tem_arr)
-            this.index[0].name = "近期新作"
-            tem_arr=[]
-          }else if(i===5){
-            this.index.push(tem_arr)
-            this.index[1].name = "人气作品"
-            tem_arr=[]
-          }
-          // else if(i===8){
-          //   this.index.push(tem_arr)
-          //   this.index[2].name = "高分神作"
-          //   tem_arr=[]
-          // }
+        for(let object in res.data.data){
+          this.result.push(res.data.data[object])
         }
-        console.log(this.index)
+        for(let i=0;i<this.result.length;i++){
+          this.index[i].data = this.result[i].slice(0,3)
+          this.index[i].index = 3
+        }
       })
       .catch((err) => {
         console.log(err)
       })
+    },
+    change:function(key){
+      if(this.index[key].index==24){
+        this.index[key].data = this.result[key].slice(this.result[key].length-3,this.result[key].length)
+        this.index[key].index = 0
+      }else{
+        this.index[key].data = this.result[key].slice(this.index[key].index,this.index[key].index+3)
+        this.index[key].index = this.index[key].index+3
+      }
     }
   }
 }
