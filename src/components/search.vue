@@ -39,7 +39,6 @@
         <div id="Main-Contents">
             <div class="Contents">
                 <div class="Relevant" v-if="Relevant">相关作品</div>
-
                 <div class="search-result" v-for="item in Relevant">
                     <div class="search-sidebar-platform left">
                         <div class="icon iconfont aone-windows support"></div>
@@ -87,24 +86,28 @@
             return {
                 search:'',
                 Relevant:null,
-                highlight:null
+                highlight:null,
+                res:null
             }
         },
-        created() {
+        created(){
             this.search = this.$route.query.keywords
-            if(this.search===undefined || this.search===''){
+            if(this.search==='' || this.search.length<3){
                 this.$router.push({path:'/'})
-            }else if(this.search.length<3){
-                this.$router.push({path:'/'})
+            }else{
+                this.getSearch()
             }
-            this.getSearch()
         },
         methods: {
             getSearch: function () {
                 this.$http.get("https://api.addones.net/api/search/app?keywords="+this.search).then((res) => {
                     if(res.data.data.length!=0){
-                        this.highlight = res.data.data[0]
-                        this.Relevant = res.data.data.length>3?res.data.data.slice(1,4):res.data.data.slice(1,res.data.data.length)
+                        this.res = res.data.data
+                        this.highlight = this.res[0]
+
+                        //判断app数量是否大于4 true：返回第二至第四个app信息，(false：判断app数量是否大于2个 true 返回全部app false：输出null)
+                        this.Relevant = this.res.length>3?this.res.slice(1,4):(this.res.length>1?this.res.slice(1,this.res.length):null)
+                        console.log(this.Relevant)
                     }
                 }).catch((err) => {
                     console.log(err)
