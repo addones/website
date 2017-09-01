@@ -5,7 +5,7 @@
       <!-- 头部 -->
       <div class="Main-Navi">
         <div class="logo">
-          <h2>待定</h2>
+          <h2>Addones</h2>
         </div>
         <!-- 搜索 -->
         <div class="Search">
@@ -55,7 +55,7 @@
     name: 'app',
     data: function () {
       return {
-        search:undefined
+        search:''
       }
     },
     created() {
@@ -63,7 +63,9 @@
     },
     methods: {
       submit:function(){
-        this.$router.push({path:"/search",query:{keywords:this.search}})
+        if(this.search.length>=3){
+          this.$router.push({path:"/search",query:{keywords:this.search}})
+        }
       }
     }
   }
@@ -71,35 +73,10 @@
 </script>
 
 <style>
-
-  * {
-    margin: 0;
-    padding: 0;
-    font-family: Microsoft Yahei;
-  }
-
-  a {
-    text-decoration: none;
-    color: #fff;
-  }
-
-  ul {
-    list-style-type: none;
-  }
-
-  img{
-    border:none;
-  }
-
-  form {
-    display: block
-  }
-
   #header {
     min-width: 1280px;
     height: 80px;
     background: #367096;
-    text-align: center;
   }
 
   #header .Main-Navi {
@@ -107,11 +84,18 @@
     height: 60px;
     padding-top: 20px;
     margin: 0 auto;
+    position:relative;
   }
 
   .Main-Navi .logo {
     float: left;
     color: #fff;
+    font-size:23px;
+    padding-left:15px;
+  }
+
+  .Main-Navi .logo h2{
+    font-size:24px;
   }
 
   .Main-Navi .user {
@@ -129,11 +113,14 @@
   .Main-Navi .Search {
     width: 400px;
     height: 40px;
-    display: inline-block;
+    position:absolute;
+    left:50%;
+    margin-left:-200px;
     border-radius: 5px;
     overflow: hidden;
     box-shadow:0 0 15px rgba(0,0,0,0.3);
     font-size: 0;
+    text-align:center;
   }
 
 
@@ -192,13 +179,13 @@
 
   #Main-Contents {
     min-width: 1280px;
+    min-height: 660px;
     background: #183D58;
   }
 
 
   #Main-Contents .Contents {
     width: 1280px;
-    min-height: 680px;
     margin: 0 auto;
     color: #fff;
   }
