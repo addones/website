@@ -2,78 +2,13 @@
     <div>
         <div id="Main-highlight">
             <router-link to="/" class="return">返回上一页</router-link>
-            <div class="search-result" v-if="highlight">
-                <div class="search-sidebar-platform left">
-                    <div class="icon iconfont aone-windows support"></div>
-                    <div class="icon iconfont aone-apple"></div>
-                    <div class="icon iconfont aone-steam"></div>
-                </div>
-                <div class="search-image left">
-                    <img :src="highlight.images.header" alt="" width="276" height="129">
-                </div>
-                <div class="search-content left">
-                    <h2>{{highlight.name}}</h2>
-                    <div class="search-content-bottom">
-                        <div class="info-basic">
-                            <span class="company">暴雪娱乐</span>
-                            <ul>
-                                <li>RPG</li>
-                                <li>18+</li>
-                            </ul>
-                            <span class="issue-date">2017年1月1日发售</span>
-                        </div>
-                        <div class="info-index">
-                            <div class="num-tag highlight">+1推荐指数：8.5/10</div>
-                            <div class="num-tag">在线人数：30000</div>
-                            <div class="num-tag">点评总数：<a href="#">30000</a></div>
-                        </div>
-                    </div>
-                </div>
-                <a href="" class="search-button-purchase-big left">
-                    <div class="orig">￥249</div>
-                    <div class="final"><span class="pct">-30%</span>￥174</div>
-                    <div class="title">到STEAM商店购买</div>
-                </a>
-            </div>
+            <search-result :item="highlight" v-if="highlight"></search-result>
         </div>
         <div id="Main-Contents">
             <div class="Contents">
-                <div class="Relevant" v-if="Relevant">相关作品</div>
-                <div class="search-result" v-for="item in Relevant">
-                    <div class="search-sidebar-platform left">
-                        <div class="icon iconfont aone-windows support"></div>
-                        <div class="icon iconfont aone-apple"></div>
-                        <div class="icon iconfont aone-steam"></div>
-                    </div>
-                    <div class="search-image left">
-                        <img :src="item.images.header" :alt="item.name" width="276" height="129">
-                    </div>
-                    <div class="search-content left">
-                        <h2>{{item.name}}</h2>
-                        <div class="search-content-bottom">
-                            <div class="info-basic">
-                                <span class="company">暴雪娱乐</span>
-                                <ul>
-                                    <li>RPG</li>
-                                    <li>18+</li>
-                                </ul>
-                                <span class="issue-date">2017年1月1日发售</span>
-                            </div>
-                            <div class="info-index">
-                                <div class="num-tag highlight">+1推荐指数：8.5/10</div>
-                                <div class="num-tag">在线人数：30000</div>
-                                <div class="num-tag">点评总数：<a href="#">30000</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="" class="search-button-purchase-big left">
-                        <div class="orig">￥249</div>
-                        <div class="final"><span class="pct">-30%</span>￥174</div>
-                        <div class="title">到STEAM商店购买</div>
-                    </a>
-                </div>
-
-                <router-link to="/" class="return" v-if="Relevant">返回上一页</router-link>
+                <div class="Relevant" v-if="(Relevant.length>0)">相关作品</div>
+                <search-result v-for="item in Relevant" :item="item" :key="item.appid"></search-result>
+                <!-- <router-link to="/" class="return" v-if="Relevant">返回上一页</router-link> -->
             </div>
         </div>
     </div>
@@ -85,33 +20,76 @@
         data() {
             return {
                 search:'',
-                Relevant:null,
+                Relevant:[],
                 highlight:null,
-                res:null
+                res:[],
+                mescroll:null
             }
         },
-        created(){
+        mounted(){
             this.search = this.$route.query.keywords
             if(this.search==='' || this.search.length<3){
                 this.$router.push({path:'/'})
             }else{
-                this.getSearch()
+                this.mescroll = new MeScroll("body",{
+                    up:{
+                        warpId:"Main-Contents",
+                        callback: this.upCallback,
+                        page:{
+                            num:1,
+                            size:3
+                        },
+                        isLock:true//锁定上拉加载
+                    },
+                    down:{
+                        use:false
+                    }
+                })
+                this.getSearch()//api
             }
+        },
+        beforeDestroy(){
+            this.mescroll.destroy()//销毁scroll事件
         },
         methods: {
             getSearch: function () {
+                this.highlight = null
+                this.Relevant = []
+                this.mescroll.lockUpScroll(true)
                 this.$http.get("https://api.addones.net/api/search/app?keywords="+this.search).then((res) => {
-                    if(res.data.data.length!=0){
-                        this.res = res.data.data
-                        this.highlight = this.res[0]
-
-                        //判断app数量是否大于4 true：返回第二至第四个app信息，(false：判断app数量是否大于2个 true 返回全部app false：输出null)
-                        this.Relevant = this.res.length>3?this.res.slice(1,4):(this.res.length>1?this.res.slice(1,this.res.length):null)
-                        console.log(this.Relevant)
+                    if(res.data.data.length>0){
+                        this.res = res.data.data.slice(1,res.data.data.length)
+                        this.highlight = res.data.data[0]
+                        this.Relevant = this.res.length>3?this.res.slice(0,3):this.res.slice(0,this.res.length)
+                        //this.mescroll.triggerUpScroll() //主动调用上拉刷新
+                        this.mescroll.lockUpScroll(false) //取消锁定上拉刷新
+                        this.mescroll.resetUpScroll()
+                    }else{
+                        console.log('game.null')
                     }
                 }).catch((err) => {
                     console.log(err)
                 })
+            },
+            upCallback: function(page){
+                console.log(page.num+'===='+page.size)
+                this.getListDataFromNet(page.num,page.size,(data)=>{
+                    if(page.num ==1) this.Relevant = []
+                    this.Relevant = this.Relevant.concat(data)
+                    this.mescroll.endSuccess(data.length)
+                },function(){
+
+                })
+            },
+            getListDataFromNet: function(pageNum,pageSize,successCallback,errorCallback){
+                setTimeout(()=>{
+                    var listData=[]
+                    for (let i = (pageNum-1)*pageSize; i < pageNum*pageSize; i++) {
+	            		if(i==this.res.length) break
+	            		listData.push(this.res[i])
+                    }
+                    successCallback&&successCallback(listData)
+                },500)
             }
         },
         watch:{
@@ -125,7 +103,8 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
+
     #Main-highlight{
         padding-top:23px;
         height:257px;
@@ -209,6 +188,7 @@
 
     .search-result .search-content h2 {
         height: 33px;
+        line-height:31px;
         font-size: 24px;
         margin-bottom: 2px;
         text-overflow: ellipsis;
@@ -292,8 +272,14 @@
 
     .search-result .search-button-purchase-big .orig {
         height: 34px;
+        line-height:31px;
         text-decoration: line-through;
         color: #6CC2F3;
+    }
+
+    .search-result .search-button-purchase-big .final{
+        height:34px;
+        line-height:31px;
     }
 
     .search-result .search-button-purchase-big span.pct {
