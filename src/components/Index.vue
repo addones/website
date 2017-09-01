@@ -81,7 +81,7 @@ export default {
       })
     },
     change:function(key){
-      if(this.index[key].index==24){
+      if(this.index[key].index==parseInt(this.result[key].length/3)*3){
         this.index[key].data = this.result[key].slice(this.result[key].length-3,this.result[key].length)
         this.index[key].index = 0
       }else{
@@ -209,6 +209,7 @@ export default {
   .thumbnail .thumbnail-list .list-item li a .thumbnail-info-name span {
     width:190px;
     height:32px;
+    font-size:16px;
     float:left;
     overflow:hidden;
     text-overflow:ellipsis;
