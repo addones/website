@@ -1,7 +1,7 @@
 <template>
     <div>
         <div id="Main-highlight">
-            <router-link to="/" class="return">返回上一页</router-link>
+            <router-link to="/" class="return"><em class="iconfont aone-back"></em> 返回上一页</router-link>
             <search-result :item="highlight" v-if="highlight"></search-result>
         </div>
         <div id="Main-Contents">
@@ -37,7 +37,7 @@
                         callback: this.upCallback,
                         page:{
                             num:1,
-                            size:3
+                            size:5
                         },
                         isLock:true//锁定上拉加载
                     },
@@ -60,10 +60,11 @@
                     if(res.data.data.length>0){
                         this.res = res.data.data.slice(1,res.data.data.length)
                         this.highlight = res.data.data[0]
-                        this.Relevant = this.res.length>3?this.res.slice(0,3):this.res.slice(0,this.res.length)
+                        this.Relevant = this.res.length>3?this.res.slice(0,5):this.res.slice(0,this.res.length)
                         //this.mescroll.triggerUpScroll() //主动调用上拉刷新
                         this.mescroll.lockUpScroll(false) //取消锁定上拉刷新
                         this.mescroll.resetUpScroll()
+                        console.log(res.data.data)
                     }else{
                         console.log('game.null')
                     }
@@ -72,7 +73,6 @@
                 })
             },
             upCallback: function(page){
-                console.log(page.num+'===='+page.size)
                 this.getListDataFromNet(page.num,page.size,(data)=>{
                     if(page.num ==1) this.Relevant = []
                     this.Relevant = this.Relevant.concat(data)
@@ -110,6 +110,15 @@
         height:257px;
     }
 
+    #Main-highlight .search-result{
+        position:relative;
+        top:42px;
+    }
+
+    #Main-highlight .search-result .search-button-purchase-big{
+        border-color:#E8BF67;
+    }
+
     .Relevant {
         width: 1280px;
         height: 46px;
@@ -123,6 +132,10 @@
 
     .left {
         float: left;
+    }
+
+    .right{
+        float:right
     }
 
     #Main-highlight .return{
@@ -140,33 +153,25 @@
         border-radius:6px;
         background:-webkit-linear-gradient( #437CA2, #31688C);
         box-shadow:0 4px 5px rgba(0,0,0,0.3),0px 1px 1px rgba(75,153,206,1) inset;
+        position:relative;
+        text-indent:12px;
+    }
+
+    .return .iconfont{
+        position:absolute;
+        font-weight:bold;
+        left: 9px;
+        text-indent:0;
+
     }
 
     .search-result {
-        width: 978px;
-        height: 129px;
-        margin: 0 auto 45px;
+        width: 938px;
+        height: 86px;
+        margin: 0 auto 15px;
         background: -webkit-linear-gradient(30deg, #377096, #173D59);
         border-radius: 5px;
         overflow: hidden;
-    }
-
-    .search-result .search-sidebar-platform {
-        width: 40px;
-        height: 119px;
-        background: #2A5B7C;
-        padding-top:10px;
-        line-height:0;
-        color:#fff;
-    }
-
-    .search-result .search-sidebar-platform .icon{
-        width:40px;
-        height:37px;
-        line-height:37px;
-        text-align:center;
-        opacity:0.35;
-        font-size:18px;
     }
 
     .search-result .search-sidebar-platform .support{
@@ -174,124 +179,83 @@
     }
 
     .search-result .search-image {
-        width: 276px;
-        height: 129px;
+        width: 184px;
+        height: 86px;
         background-color: #65B7E6;
     }
 
     .search-result .search-content {
-        width: 426px;
-        height: 113px;
-        padding: 8px 20px 8px 16px;
+        width: 527px;
+        height: 70px;
+        padding: 8px 11px 8px 16px;
         color: #fff;
+        font-size:14px;
     }
 
-    .search-result .search-content h2 {
-        height: 33px;
+    .search-result .search-content .search-content-left{
+        width:395px;
+    }
+
+    .search-result .search-content .search-content-left span{
+        display:inline-block;
+        line-height:12px;
+    }
+
+    .search-result .search-content .search-content-left h2 {
+        height: 44px;
         line-height:31px;
         font-size: 24px;
-        margin-bottom: 2px;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
     }
 
-    .search-result .search-content .search-content-bottom {
-        line-height: 0;
-        height: 72px;
+    .search-result .search-content .search-content-right span.issue-date{
+        display:inline-block;
+    }
+    
+
+    .search-result .search-content .search-content-right .search-sidebar-platform{
+        position:relative;
+        /* left:55px; */
+        padding-top:8px;
+        height: 39px;
+        text-align:right;
     }
 
-    .search-result .search-content .info-basic {
-        float: left;
-    }
-
-    .search-result .search-content .info-basic span {
-        display: inline-block;
-        font-size: 14px;
-        line-height: 14px;
-    }
-
-    .search-result .search-content .info-basic span.company {
-        height: 32px;
-        display: inline-block;
-    }
-
-    .search-result .search-content .info-basic ul {
-        height: 26px;
-        font-size: 0;
-    }
-
-    .search-result .search-content .info-basic ul li {
-        width: 32px;
-        height: 16px;
-        line-height: 16px;
-        display: inline-block;
-        border: 2px solid #5794BC;
-        border-radius: 4px;
-        padding: 0px 2px;
-        font-size: 13px;
-        text-align: center;
-        margin-right: 10px;
-    }
-
-    .search-result .search-content .info-index {
-        padding-top: 15px;
-        float: right;
-        text-align: right;
-    }
-
-    .search-result .search-content .info-index .num-tag {
-        height: 22px;
-        font-size: 14px;
-        line-height: 14px;
-    }
-
-    .search-result .search-content .info-index .num-tag a {
-        display: inline-block;
-        line-height: 12px;
-        color: #6CC2F3;
-        border-bottom: 2px solid #6CC2F3;
-    }
-
-    .search-result .search-content .info-index .highlight {
-        color: #FFCE69;
+    .search-result .search-content .search-content-right .search-sidebar-platform .icon{
+        display:inline-block;
+        font-size:18px;
+        line-height:18px;
+        margin-left:12px;
+        opacity:0.3;
     }
 
     .search-result .search-button-purchase-big {
-        width: 166px;
-        height: 109px;
-        font-size: 24px;
+        width: 176px;
+        height: 82px;
+        font-size: 14px;
+        line-height:43px;
+        padding-right:20px;
         position: relative;
-        padding: 8px 15px;
         border: 2px solid #6CC2F3;
         border-radius: 6px;
         text-align: right;
         overflow: hidden;
-        background: url('../assets/steam-big.svg') no-repeat 16px 18px, -webkit-linear-gradient(#377096, #2C5E80);
+        background:-webkit-linear-gradient(#377096, #2C5E80);
     }
 
-    .search-result .search-button-purchase-big .orig {
-        height: 34px;
-        line-height:31px;
-        text-decoration: line-through;
-        color: #6CC2F3;
+    .search-result .search-button-purchase-big .aone-steam{
+        position:absolute;
+        left: 36px;
+        top:9px;
+        color:rgba(0,0,0,0.2);
+        font-size:65px;
+        line-height:65px;
     }
 
-    .search-result .search-button-purchase-big .final{
-        height:34px;
-        line-height:31px;
-    }
-
-    .search-result .search-button-purchase-big span.pct {
-        height: 34px;
-        color: #4CC81D;
-    }
-
-    .search-result .search-button-purchase-big .title {
-        font-size: 14px;
-        line-height: 14px;
-        position: absolute;
-        bottom: 14px;
-        right: 15px;
+    .search-result .search-button-purchase-big .aone-enter{
+        font-size:36px;
+        color:#6BC2F3
     }
 </style>
