@@ -172,8 +172,8 @@
 
   #Main-highlight{
     min-width:1280px;
-    height:215px;
-    padding-top:65px;
+    height:257px;
+    padding-top:23px;
     background:#367096;
   }
 
