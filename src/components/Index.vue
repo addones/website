@@ -4,17 +4,17 @@
     <ul class="banner">
       <li class="banner-left">
         <a href="#">
-          <img src="https://icdn.static.dawoea.net/steam/apps/585840/header.jpg" alt="">
+          <img src="https://steamcdn.static.addones.net/steam/apps/447040/header.jpg" alt="">
         </a>
       </li>
       <li class="banner-main">
         <a href="#">
-          <img src="https://icdn.static.dawoea.net/steam/apps/41070/header.jpg" alt="">
+          <img src="https://steamcdn.static.addones.net/steam/apps/349220/header.jpg" alt="">
         </a>
       </li>
       <li class="banner-right">
         <a href="#">
-          <img src="https://icdn.static.dawoea.net/steam/apps/302270/header.jpg" alt="">
+          <img src="https://steamcdn.static.addones.net/steam/apps/433850/header.jpg" alt="">
         </a>
       </li>
     </ul>
