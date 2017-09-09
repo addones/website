@@ -64,7 +64,6 @@
                         //this.mescroll.triggerUpScroll() //主动调用上拉刷新
                         this.mescroll.lockUpScroll(false) //取消锁定上拉刷新
                         this.mescroll.resetUpScroll()
-                        console.log(res.data.data)
                     }else{
                         console.log('game.null')
                     }
@@ -175,7 +174,7 @@
     }
 
     .search-result .search-sidebar-platform .support{
-        opacity:1;
+        opacity:1 !important;
     }
 
     .search-result .search-image {
@@ -194,15 +193,31 @@
 
     .search-result .search-content .search-content-left{
         width:395px;
+        height:70px;
     }
 
-    .search-result .search-content .search-content-left span{
+    .search-result .search-content .search-content-left .company{
+        width:200px;
+        height: 16px;
+        overflow: hidden;
+        white-space:nowrap;
+    }
+
+    .search-result .search-content .search-content-right{
+        height:70px;
+    }
+
+    .search-result .search-content .search-content-left .company span{
         display:inline-block;
-        line-height:12px;
+        line-height:16px;
+    }
+    .search-result .search-content .search-content-left .company span:not(:last-child):after{
+        content:'/';
+        margin:0 5px;
     }
 
     .search-result .search-content .search-content-left h2 {
-        height: 44px;
+        height: 43px;
         line-height:31px;
         font-size: 24px;
         text-overflow: ellipsis;
@@ -233,16 +248,20 @@
 
     .search-result .search-button-purchase-big {
         width: 176px;
-        height: 82px;
+        height: 68px;
         font-size: 14px;
-        line-height:43px;
-        padding-right:20px;
+        line-height:14px;
+        padding:14px 20px 0 0;
         position: relative;
         border: 2px solid #6CC2F3;
         border-radius: 6px;
         text-align: right;
         overflow: hidden;
         background:-webkit-linear-gradient(#377096, #2C5E80);
+    }
+
+    .search-result .search-button-purchase-big .particulars{
+        padding-bottom:14px;
     }
 
     .search-result .search-button-purchase-big .aone-steam{
@@ -255,6 +274,7 @@
     }
 
     .search-result .search-button-purchase-big .aone-enter{
+        line-height:36px;
         font-size:36px;
         color:#6BC2F3
     }
