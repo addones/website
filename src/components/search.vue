@@ -184,15 +184,15 @@
     }
 
     .search-result .search-content {
-        width: 527px;
+        width: 550px;
         height: 70px;
-        padding: 8px 11px 8px 16px;
+        padding: 8px 16px 8px 16px;
         color: #fff;
         font-size:14px;
     }
 
     .search-result .search-content .search-content-left{
-        width:395px;
+        width:425px;
         height:70px;
     }
 
@@ -247,7 +247,7 @@
     }
 
     .search-result .search-button-purchase-big {
-        width: 176px;
+        width: 148px;
         height: 68px;
         font-size: 14px;
         line-height:14px;
@@ -266,11 +266,19 @@
 
     .search-result .search-button-purchase-big .aone-steam{
         position:absolute;
-        left: 36px;
+        left: 8px;
         top:9px;
         color:rgba(0,0,0,0.2);
         font-size:65px;
         line-height:65px;
+    }
+
+    #Main-highlight .search-result .search-button-purchase-big .aone-enter{
+        color:#E8BF67
+    }
+
+    #Main-highlight .search-result .search-button-purchase-big .particulars{
+        color:#E8BF67
     }
 
     .search-result .search-button-purchase-big .aone-enter{
@@ -278,4 +286,5 @@
         font-size:36px;
         color:#6BC2F3
     }
+
 </style>
