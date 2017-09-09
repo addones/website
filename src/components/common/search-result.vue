@@ -20,7 +20,7 @@
             </div>
         </div>
     
-        <router-link to="/appInfo" class="search-button-purchase-big right">
+        <router-link :to="{path:'/'}" class="search-button-purchase-big right">
             <em class="iconfont aone-steam"></em>
             <div class="particulars">详情</div>
             <em class="iconfont aone-enter"></em>
@@ -42,7 +42,7 @@
     .right{
         float:right
     }
-    
+
     .search-result {
         width: 938px;
         height: 86px;
