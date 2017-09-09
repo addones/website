@@ -99,7 +99,7 @@ export default {
   #Main-highlight ul.banner{
     width:1194px;
     height:215px;
-    margin:0 auto;
+    margin:40px auto 0;
     position:relative;    
   }
 
@@ -109,7 +109,7 @@ export default {
     position:absolute;
     border-radius:5px;
     overflow:hidden;
-    bottom:2px;
+    bottom:0;
     box-shadow:0 0 25px rgba(0,0,0,0.8);
   }
 
