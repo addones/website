@@ -15,7 +15,7 @@
             <div class="search-content-left">
                 <h2 class="search-content-name">{{item.name}}</h2>
                 <div class="company">
-                    <p><span v-for="item in item.publishers">{{item}}</span></p>
+                    <span class="Max"><span v-for="item in item.publishers">{{item}}</span></span>
                 </div>
             </div>
         </div>
@@ -64,20 +64,25 @@
 
     .search-result .search-content {
         width: 550px;
-        height: 70px;
-        padding: 8px 16px 8px 16px;
+        height: 72px;
+        padding: 8px 16px 6px 16px;
         color: #fff;
         font-size: 14px;
     }
 
     .search-result .search-content .search-content-left {
         width: 425px;
-        height: 70px;
+        height: 72px;
     }
 
     .search-result .search-content .search-content-left .company {
-        width: 200px;
-        height: 16px;
+        width:200px;
+        position:relative;
+    }
+
+    .search-result .search-content .search-content-left .company span.Max{
+        width: 172px;
+        display:inline-block;
         overflow: hidden;
         white-space: nowrap;
     }
