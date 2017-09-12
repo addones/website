@@ -172,8 +172,7 @@
 
   #Main-highlight{
     min-width:1280px;
-    height:257px;
-    padding-top:23px;
+    height:280px;
     background:#367096;
   }
 

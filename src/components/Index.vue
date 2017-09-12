@@ -99,8 +99,9 @@ export default {
   #Main-highlight ul.banner{
     width:1194px;
     height:215px;
-    margin:40px auto 0;
-    position:relative;    
+    margin:0 auto;
+    position:relative;
+    top:63px;
   }
 
   #Main-highlight ul.banner li{
