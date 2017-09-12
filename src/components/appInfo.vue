@@ -267,6 +267,7 @@
 
     .Contents h2.title{
         padding-left:5px;
+        font-size:24px;
         line-height:158px;
         float:left;
     }
