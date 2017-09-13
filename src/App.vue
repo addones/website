@@ -31,7 +31,7 @@
             <div class="input">
               <input type="text" placeholder="搜索推荐内容，如新作或新活动" v-model="search" name="keywords">
             </div>
-            <router-link :to="{path:'/search',query:{keywords:search}}"  class="iconfont aone-search"></router-link>
+            <router-link :to="{name:'Search',query:{keywords:search}}"  class="iconfont aone-search"></router-link>
           </form>
         </div>
         <!-- 搜索 end -->
