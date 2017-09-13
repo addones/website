@@ -27,12 +27,13 @@
         <div class="thumbnail-list">
           <ul class="list-item">
             <li v-for="item in item.data">
-              <a href="#">
-                <img :src="'https://icdn.static.dawoea.net/steam/apps/'+item.appid+'/header.jpg'" alt="" width="368" height="172">
+              
+                <router-link :to="/appInfo/+item.appid">
+                <img :src="item.appid!=undefined?'https://icdn.static.dawoea.net/steam/apps/'+item.appid+'/header.jpg':''" :class="{show:item.appid}"  alt="" width="368" height="172">
                 <div class="thumbnail-info">
                     <div class="thumbnail-info-name"><span class="name">{{item.name}}</span><span class="thumbnail-info-time">{{item.released}}</span></div>
                 </div>
-              </a>
+              </router-link>
             </li>
           </ul>
         </div>
@@ -51,12 +52,20 @@ export default {
         {
           name : '近期作品',
           index:2,
-          data : []
+          data : [
+            {},
+            {},
+            {} 
+          ]
         },
         {
           name : '人气作品',
           index:2,
-          data : []
+          data : [
+            {},
+            {},
+            {}
+          ]
         }
       ],
       result:[]
@@ -178,7 +187,12 @@ export default {
   }
 
   .thumbnail .thumbnail-list .list-item li a img {
+    opacity:0;
     transition:all 0.5s;
+  }
+
+  .thumbnail .thumbnail-list .list-item li a img.show{
+    opacity: 1;
   }
 
   .thumbnail .thumbnail-list .list-item li a:hover img{
