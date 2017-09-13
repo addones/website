@@ -1,26 +1,23 @@
 <template>
     <div>
         <div id="Main-highlight">
+            <!-- 返回按钮 -->
             <div class="return"><router-link to="/" class="return-button"><em class="iconfont aone-back"></em> 返回上一页</router-link></div>
+            <!-- 返回按钮 end -->
             <div class="head-info">
                 <div class="head-image">
-                    <img src="https://steamcdn.static.addones.net/steam/apps/447040/header.jpg" width="276" height="129" alt="">
+                    <img :src="appInfo.common.images.header" width="276" height="129" alt="">
                 </div>
                 <div class="head-content">
-                    <h2 class="title">Watch_Dogs 2</h2>
-                    <span class="Online-population">当前有800000玩家在线</span>
+                    <h2 class="title">{{appInfo.common.name}}</h2>
+                    <span class="Online-population" v-show="appInfo.common.online">当前有{{appInfo.common.online}}玩家在线</span>
                     <div class="lables">
-                        <span>PPG</span>
-                        <span>中文</span>
-                        <span>多人</span>
-                        <span>防挂</span>
-                        <span>VR</span>
-                        <span>18+</span>
+                        <span v-for="item in appInfo.common.tags.tags.slice(0,6)" :key="item">{{item}}</span>
                     </div>
                     <div class="platform">
-                        <div class="icon iconfont aone-windows support"></div>
-                        <div class="icon iconfont aone-apple support"></div>
-                        <div class="icon iconfont aone-steam"></div>
+                        <div class="icon iconfont aone-windows" :class="{support:appInfo.common.platforms.windows}"></div>
+                        <div class="icon iconfont aone-apple" :class="{support:appInfo.common.platforms.mac}"></div>
+                        <div class="icon iconfont aone-steam" :class="{support:appInfo.common.platforms.linux}"></div>
                     </div>
                 </div>
                 <div class="head-steam">
@@ -52,13 +49,13 @@
                     <h2 class="title">基础信息</h2>
                     <div class="info">
                         <div class="index-label">
-                            75<span>良好</span>
+                            {{appInfo.score.addones}}<span v-show="appInfo.score.addones">良好</span>
                         </div>
                         <div class="text">
                             <ul>
-                                <li>制作团队: <span>Criteria</span><span>Aspyr(Win/Mac)</span></li>
-                                <li>发行公司: <span>EA Games</span><span>Aspyr(Win/Mac)</span></li>
-                                <li>发行日期: 2017/01/01</li>
+                                <li>制作团队：<span v-for="item in appInfo.common.developers" :key="item">{{item}}</span></li>
+                                <li>发行公司：<span v-for="item in appInfo.common.publishers" :key="item">{{item}}</span></li>
+                                <li>发行日期：{{appInfo.common.release_date.format}}</li>
                             </ul>
                         </div>
                     </div>
@@ -68,11 +65,11 @@
                     <h2 class="title">指数一览</h2>
                     <div class="info">
                         <ul class="index-item">
-                            <li>24<span>玩家平均总游戏时长</span></li>
-                            <li>23<span>玩家中位总游戏时长</span></li>
-                            <li>23000<span>近两周销量</span></li>
-                            <li>1000000<span>总销量</span></li>
-                            <li>365<span>发售天数</span></li>
+                            <li>{{appInfo.parameter.owners}}<span>玩家平均总游戏时长</span></li>
+                            <li>{{appInfo.parameter.owners_2weeks}}<span>玩家中位总游戏时长</span></li>
+                            <li>{{appInfo.parameter.average_forever}}<span>近两周销量</span></li>
+                            <li>{{appInfo.parameter.median_forever}}<span>总销量</span></li>
+                            <li>{{appInfo.common.release_date.humans}}<span>发售天数</span></li>
                         </ul>
                     </div>
                 </div>
@@ -86,22 +83,49 @@
     export default{
         data(){
             return{
-                appInfo:{}
+                //默认数据结构和数据
+                appInfo:{
+                    common:{
+                        name:undefined,//游戏名
+                        images:{//图片
+                            header:''
+                        },
+                        tags:{
+                            tags:[]//标签
+                        },
+                        online:null,//在线人数
+                        platforms:{//平台
+                            windows:0,
+                            mac:0,
+                            linux:0
+                        },
+                        developers:[],//制作公司
+                        publishers:[],//发行公司
+                        release_date:{
+                            humans:undefined,//发售天数
+                            format:undefined//发行日期
+                        }
+                    },
+                    parameter:{//num
+                        owners: undefined,//玩家平均总游戏时长
+                        owners_2weeks: undefined,//玩家中位总游戏时长
+                        average_forever: undefined,//近两周销量
+                        median_forever: undefined//总销量
+                    },
+                    score:{
+                        addones:undefined //+1指数
+                    }
+                }
             }
         },
-        create(){
-           console.log('safdasdf')
-           console.log(this.$route.params)
+        mounted(){
+           console.log(this.$route.params.appid)
+           this.getAppInfo(this.$route.params.appid)
         },
         methods:{
-            getAppInfo:function(){
-                this.$http.get('https://api.dawoea.net/api/app/').then((res) => {
-                    if(res.data.code === 200){
-                        
-                    }else if(res.data.code === 401){
-                        window.location.href = "https://account.addones.net/home"
-                    }
-                    console.log(res.data.code)
+            getAppInfo:function(appid){
+                this.$http.get('https://api.dawoea.net/api/app/'+appid).then((res) => {
+                    this.appInfo = res.data.data
                 }).catch(err => {
                     //console.log(err)
                 })
@@ -157,15 +181,16 @@
 
     .head-info .head-content .lables span{
         display:inline-block;
-        width:36px;
+        width:28px;
         height:16px;
         border:2px solid #5794bc;
         font-size:14px;
-        text-align:center;
         line-height:16px;
         margin-right:10px;
+        padding:0 4px;
         border-radius:4px;
         color:#fff;
+        overflow: hidden;
     }
 
     .head-info .head-steam{
@@ -206,6 +231,7 @@
     }
 
     .head-info .head-steam .box a.Collection{
+        height:28px;
         line-height:20px;
     }
 
@@ -270,10 +296,10 @@
         font-size:24px;
         line-height:158px;
         float:left;
+        font-weight:500;
     }
 
     .Contents .info{
-        width:784px;
         padding:36px 0 0 154px;
     }
 
@@ -323,6 +349,11 @@
         padding-right:55px;
     }
 
+    .basic-info .index-label .text{
+        padding-right:370px;
+        overflow: hidden;
+    }
+
     .basic-info .index-label span{
         font-size:14px;
         position:absolute;
@@ -331,12 +362,12 @@
 
     .index{
         width:938px;
-        height:540px;
         border-bottom:2px solid #377096;
     }
 
     .index .index-item{
         width:862px;
+        padding-bottom:9px;
     }
     
     .index .index-item li{
