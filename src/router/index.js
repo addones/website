@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Index from '@/components/Index'
 import Home from '@/components/Home'
 import Search from '@/components/search'
-import appInfo from '@/components/appInfo'
+import app from '@/components/app'
 
 Vue.use(Router)
 
@@ -25,9 +25,16 @@ export default new Router({
       component:Search
     },
     {
-      name:'appInfo',
-      path:'/appInfo/:appid',
-      component:appInfo
+      name:'app',
+      path:'/app/:appid',
+      component:app
     }
-  ]
+  ],
+  scrollBehavior(to,from,savedPosition){
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
+    }
+  }
 })
