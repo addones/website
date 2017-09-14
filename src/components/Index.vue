@@ -28,7 +28,7 @@
           <ul class="list-item">
             <li v-for="item in item.data">
               
-                <router-link :to="/appInfo/+item.appid">
+                <router-link :to="/app/+item.appid">
                 <img :src="item.appid!=undefined?'https://icdn.static.dawoea.net/steam/apps/'+item.appid+'/header.jpg':''" :class="{show:item.appid}"  alt="" width="368" height="172">
                 <div class="thumbnail-info">
                     <div class="thumbnail-info-name"><span class="name">{{item.name}}</span><span class="thumbnail-info-time">{{item.released}}</span></div>

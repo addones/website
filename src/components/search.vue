@@ -63,7 +63,7 @@
                         this.Relevant = this.res.length>3?this.res.slice(0,5):this.res.slice(0,this.res.length)
                         //this.mescroll.triggerUpScroll() //主动调用上拉刷新
                         this.mescroll.lockUpScroll(false) //取消锁定上拉刷新
-                        this.mescroll.resetUpScroll()
+                        //this.mescroll.resetUpScroll()
                     }else{
                         console.log('game.null')
                     }
