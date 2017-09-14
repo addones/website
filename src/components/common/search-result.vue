@@ -20,7 +20,7 @@
             </div>
         </div>
     
-        <router-link :to="{name:'appInfo',params:{appid:item.appid}}" class="search-button-purchase-big right">
+        <router-link :to="{name:'app',params:{appid:item.appid}}" class="search-button-purchase-big right">
             <em class="iconfont aone-steam"></em>
             <div class="particulars">详情</div>
             <em class="iconfont aone-enter"></em>
