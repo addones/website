@@ -8,6 +8,13 @@
                 <div class="head-image">
                     <img :src="app.common.images.header" width="276" height="129" alt="">
                 </div>
+                <div class="head-steam">
+                    <a href="#" class="button"><em class="iconfont aone-steam"></em>去STEAM看看</a>
+                    <div class="box">
+                        <a href="#" class="Collection"><em class="icon iconfont aone-share"></em><span>收藏</span><em class="icon iconfont aone-share"></em></a>
+                        <a href="#"><em class="icon iconfont aone-dlc"></em><span>查看DLC</span></a>
+                    </div>
+                </div>
                 <div class="head-content">
                     <h2 class="title">{{app.common.name}}</h2>
                     <span class="Online-population" v-show="app.common.online">当前有{{app.common.online}}玩家在线</span>
@@ -20,14 +27,7 @@
                         <div class="icon iconfont aone-steam" :class="{support:app.common.platforms.linux}"></div>
                     </div>
                 </div>
-                <div class="head-steam">
-                    <a href="#" class="button"><em class="iconfont aone-steam"></em>去STEAM看看</a>
-                    <div class="box">
-                        <a href="#" class="Collection"><em class="icon iconfont aone-share"></em><span>收藏</span></a>
-                        <a href="#"><em class="icon iconfont aone-dlc"></em>查看DLC</a>
-                    </div>
-                    
-                </div>
+                
             </div>
         </div>
         <div id="Main-Contents">
@@ -154,10 +154,10 @@
     }
 
     .head-info .head-content{
-        width:485px;
+        width:470px;
         height: 129px;
         float:left;
-        padding-left:17px;
+        padding:0 15px 0 17px;
     }
 
     .head-info .head-content h2.title{
@@ -165,6 +165,9 @@
         font-size:24px;
         line-height:30px;
         color:#fff;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
     
     .head-info .head-content span.Online-population{
@@ -196,7 +199,7 @@
     .head-info .head-steam{
         width:160px;
         height:129px;
-        float:left;
+        float:right;
         font-size:14px;
     }
 
@@ -226,12 +229,15 @@
         color:#68BDEE
     }
 
-    .head-info .head-steam .box .aone-dlc,.head-info .head-steam .box .aone-share{
-        margin-right:7px;
+    .head-info .head-steam .box a.Collection span{
+        padding:0 24px 0 7px;
+    }
+    .head-info .head-steam .box a span{
+        padding-left:7px
     }
 
     .head-info .head-steam .box a.Collection{
-        height:28px;
+        height:30px;
         line-height:20px;
     }
 
@@ -323,6 +329,10 @@
     .basic-info{
         padding-bottom:20px;
         border-bottom:2px solid #377096;
+    }
+
+    .basic-info .text{
+        padding-right:366px;
     }
 
     .basic-info .text ul li{
