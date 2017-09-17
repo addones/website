@@ -26,10 +26,10 @@
         <div class="thumbnail-title"><span @click="change(index)">{{item.name}}</span></div>
         <div class="thumbnail-list">
           <ul class="list-item">
-            <li v-for="item in item.data">
+            <li v-for="item in item.data" :key="item.appid">
               
-                <router-link :to="/app/+item.appid" v-if="{show:item.appid}">
-                <img :src="item.appid!=undefined?'https://icdn.static.dawoea.net/steam/apps/'+item.appid+'/header.jpg':''" :class="{show:item.appid}" alt="" width="368" height="172">
+                <router-link :to="/app/+item.appid" v-if="item.appid">
+                <img :src="'https://icdn.static.dawoea.net/steam/apps/'+item.appid+'/header.jpg'" alt="">
                 <div class="thumbnail-info">
                     <div class="thumbnail-info-name"><span class="name">{{item.name}}</span><span class="thumbnail-info-time">{{item.released}}</span></div>
                 </div>
@@ -181,19 +181,15 @@ export default {
   }
 
   .thumbnail .thumbnail-list .list-item li a {
-    
     display: block;
     position: relative;
     
   }
 
   .thumbnail .thumbnail-list .list-item li a img {
-    opacity:0;
+    width:368px;
+    height:172px;
     transition:all 0.5s;
-  }
-
-  .thumbnail .thumbnail-list .list-item li a img.show{
-    opacity: 1;
   }
 
   .thumbnail .thumbnail-list .list-item li a:hover img{

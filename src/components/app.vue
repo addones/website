@@ -17,9 +17,9 @@
                 </div>
                 <div class="head-content">
                     <h2 class="title">{{app.common.name}}</h2>
-                    <span class="Online-population" v-show="app.common.online">当前有{{app.common.online}}玩家在线</span>
+                    <span class="Online-population">当前有{{app.common.online}}位玩家在线</span>
                     <div class="lables">
-                        <span v-for="item in app.common.tags.tags.slice(0,6)" :key="item">{{item}}</span>
+                        <span v-for="item in app.common.tags!=null?app.common.tags.slice(0,6):app.common.tags" :key="item">{{item}}</span>
                     </div>
                     <div class="platform">
                         <div class="icon iconfont aone-windows" :class="{support:app.common.platforms.windows}"></div>
@@ -36,10 +36,10 @@
                     <h2 class="title">游戏截图</h2>
                     <div class="info">
                         <ul class="screenshots-images">
-                            <li><a href="#"><img src="" alt=""></a></li>
-                            <li><a href="#"><img src="" alt=""></a></li>
-                            <li><a href="#"><img src="" alt=""></a></li>
-                            <li><a href="#"><img src="" alt=""></a></li>
+                            <li><img src="" alt=""></li>
+                            <li><img src="" alt=""></li>
+                            <li><img src="" alt=""></li>
+                            <li><img src="" alt=""></li>
                         </ul>
                     </div>
                     
@@ -65,11 +65,11 @@
                     <h2 class="title">指数一览</h2>
                     <div class="info">
                         <ul class="index-item">
-                            <li>{{app.parameter.average_forever}}<span>玩家平均总游戏时长</span></li>
-                            <li>{{app.parameter.median_forever}}<span>玩家中位总游戏时长</span></li>
-                            <li>{{app.parameter.owners_2weeks}}<span>近两周销量</span></li>
-                            <li>{{app.parameter.owners}}<span>总销量</span></li>
-                            <li>{{app.common.release_date.humans}}<span>发售天数</span></li>
+                            <li>{{app.parameter.average_forever!=null?app.parameter.average_forever:'暂无'}}<span>玩家平均总游戏时长</span></li>
+                            <li>{{app.parameter.median_forever!=null?app.parameter.median_forever:'暂无'}}<span>玩家中位总游戏时长</span></li>
+                            <li>{{app.parameter.owners_2weeks!=null?app.parameter.owners_2weeks:'暂无'}}<span>近两周销量</span></li>
+                            <li>{{app.parameter.owners!=null?app.parameter.owners:'暂无'}}<span>总销量</span></li>
+                            <li>{{app.common.release_date.humans!=null?app.common.release_date.humans:'暂无'}}<span>发售天数</span></li>
                         </ul>
                     </div>
                 </div>
@@ -90,10 +90,8 @@
                         images:{//图片
                             header:''
                         },
-                        tags:{
-                            tags:[]//标签
-                        },
-                        online:undefined,//在线人数
+                        tags:[],
+                        online:0,//在线人数
                         platforms:{//平台
                             windows:0,
                             mac:0,
@@ -102,18 +100,18 @@
                         developers:[],//制作公司
                         publishers:[],//发行公司
                         release_date:{
-                            humans:undefined,//发售天数
+                            humans:'',//发售天数
                             format:undefined//发行日期
                         }
                     },
                     parameter:{//num
-                        owners: undefined,//总销量
-                        owners_2weeks: undefined,//近两周销量
-                        average_forever: undefined,//玩家平均总游戏时长
-                        median_forever: undefined//玩家中位总游戏时长
+                        owners: '',//总销量
+                        owners_2weeks: '',//近两周销量
+                        average_forever: '',//玩家平均总游戏时长
+                        median_forever: ''//玩家中位总游戏时长
                     },
                     score:{
-                        addones:undefined //+1指数
+                        addones:'' //+1指数
                     }
                 }
             }
@@ -311,19 +309,26 @@
 
     .screenshots .screenshots-images{
         width:784px;
-        font-size:0;
+        overflow: hidden;
     }
 
     .screenshots .screenshots-images li{
         width:184px;
         height:86px;
+        float:left;
         background-color:#65B7E6;
         border-radius:6px;
-        display:inline-block;
+        overflow: hidden;
+        cursor: pointer;
     }
 
     .screenshots .screenshots-images li:not(:last-child){
         margin-right:16px;
+    }
+
+    .screenshots .screenshots-images li a img{
+        width:inherit;
+        height: inherit;
     }
 
     .basic-info{

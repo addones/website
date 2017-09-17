@@ -1,5 +1,5 @@
 <template>
-    <div class="search-result" v-if="item">
+    <div class="search-result" :key="item.appid">
         <div class="search-image left">
             <img :src="item.header" alt="" width="184" height="86">
         </div>
