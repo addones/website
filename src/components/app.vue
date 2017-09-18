@@ -32,7 +32,7 @@
         </div>
         <div id="Main-Contents">
             <div class="Contents">
-                <div class="screenshots">
+                <div class="info-basic-producer screenshots">
                     <h2 class="title">游戏截图</h2>
                     <div class="info">
                         <ul class="screenshots-images">
@@ -45,7 +45,7 @@
                     
                 </div>
 
-                <div class="basic-info">
+                <div class="info-basic-producer basic-info">
                     <h2 class="title">基础信息</h2>
                     <div class="info">
                         <div class="index-label">
@@ -53,15 +53,25 @@
                         </div>
                         <div class="text">
                             <ul>
-                                <li>制作团队：<span v-for="item in app.common.developers" :key="item">{{item}}</span></li>
-                                <li>发行公司：<span v-for="item in app.common.publishers" :key="item">{{item}}</span></li>
-                                <li>发行日期：{{app.common.release_date.format}}</li>
+                                <li>
+                                    <div class="text-title">制作团队：</div>
+                                    <div class="text-content">
+                                        <span v-for="item in app.common.developers" :key="item">{{item}}</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="text-title">发行公司：</div>
+                                    <div class="text-content">
+                                        <span v-for="item in app.common.publishers" :key="item">{{item}}</span>
+                                    </div>
+                                </li>
+                                <li><div class="text-title">发行日期：</div>{{app.common.release_date.format}}</li>
                             </ul>
                         </div>
                     </div>
                 </div>
 
-                <div class="index">
+                <div class="info-basic-producer index">
                     <h2 class="title">指数一览</h2>
                     <div class="info">
                         <ul class="index-item">
@@ -291,25 +301,39 @@
     }
 
     .screenshots{
-        height:158px;
-        border-bottom:2px solid #377096;
+        height:160px;
+    }
+
+    .info-basic-producer{
+        position:relative;
+    }
+
+    .info-basic-producer::after{
+        content:'';
+        width:100%;
+        height:2px;
+        display:block;
+        position:absolute;
+        bottom:0;
+        background:-webkit-linear-gradient(30deg, #173D59, #377096,#173D59);
     }
 
     .Contents h2.title{
-        padding-left:5px;
+        padding:63px 0 0 5px;
         font-size:24px;
-        line-height:158px;
+        line-height:32px;
         float:left;
         font-weight:500;
     }
 
     .Contents .info{
-        padding:36px 0 0 154px;
+        padding-left:154px !important;
     }
 
     .screenshots .screenshots-images{
         width:784px;
         overflow: hidden;
+        padding-top:36px;
     }
 
     .screenshots .screenshots-images li{
@@ -331,19 +355,32 @@
         height: inherit;
     }
 
-    .basic-info{
-        padding-bottom:20px;
-        border-bottom:2px solid #377096;
+    .basic-info .info{
+        padding:28px 0 12px 0;
     }
 
     .basic-info .text{
-        padding-right:366px;
+        padding-right:428px;
+    }
+
+    .basic-info .text .text-title{
+        width:70px;
+        float:left;
+    }
+
+    .basic-info .text .text-content{
+        padding-left:70px;
+    }
+
+    .basic-info .text .text-content span{
+        display:inline-block;
     }
 
     .basic-info .text ul li{
-        height:34px;
+        height:40px;
         font-size:14px;
-        line-height: 14px;
+        line-height: 20px;
+        overflow: hidden;
     }
 
     .basic-info .text ul li span:not(:last-child)::after{
@@ -362,6 +399,7 @@
         text-align: right;
         position: relative;
         padding-right:55px;
+        margin-top:8px;
     }
 
     .basic-info .index-label .text{
@@ -377,12 +415,11 @@
 
     .index{
         width:938px;
-        border-bottom:2px solid #377096;
     }
 
     .index .index-item{
         width:862px;
-        padding-bottom:9px;
+        padding:36px 0 11px 0;
         overflow: hidden
     }
     
