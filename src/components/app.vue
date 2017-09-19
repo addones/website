@@ -19,7 +19,7 @@
                     <h2 class="title">{{app.common.name}}</h2>
                     <span class="Online-population">当前有{{app.common.online}}位玩家在线</span>
                     <div class="lables">
-                        <span v-for="item in app.common.tags!=null?app.common.tags.slice(0,6):app.common.tags" :key="item">{{item}}</span>
+                        <span v-for="item in app.common.tags.slice(0,6)" :key="item">{{item}}</span>
                     </div>
                     <div class="platform">
                         <div class="icon iconfont aone-windows" :class="{support:app.common.platforms.windows}"></div>
@@ -49,7 +49,12 @@
                     <h2 class="title">基础信息</h2>
                     <div class="info">
                         <div class="index-label">
-                            {{app.score.addones}}<span v-show="app.score.addones">良好</span>
+                            <div class="addone">
+                                <div class="addone-bg addone-top">+1指数</div>
+                                <div class="addone-bg addone-bottom">Addone</div>
+                            </div>
+                            <div class="addone-data">{{app.score.addones!=null?app.score.addones:'暂无'}}</div>
+                            <span v-if="app.score.addones">良好</span>
                         </div>
                         <div class="text">
                             <ul>
@@ -94,9 +99,10 @@
         data(){
             return{
                 //默认数据结构和数据
-                app:{
+                app:{//初始值
                     common:{
-                        name:undefined,//游戏名
+                        name:'',//游戏名
+                        is_presell:null,//预售
                         images:{//图片
                             header:''
                         },
@@ -123,6 +129,37 @@
                     score:{
                         addones:'' //+1指数
                     }
+                },
+                appDefault:{//数据为空时，返回结果
+                    common:{
+                        name:undefined,//游戏名
+                        is_presell:false,//预售
+                        images:{//图片
+                            header:null
+                        },
+                        tags:[],
+                        online:0,//在线人数
+                        platforms:{//平台
+                            windows:0,
+                            mac:0,
+                            linux:0
+                        },
+                        developers:[],//制作公司
+                        publishers:[],//发行公司
+                        release_date:{
+                            humans:null,//发售天数
+                            format:undefined//发行日期
+                        }
+                    },
+                    parameter:{//num
+                        owners: null,//总销量
+                        owners_2weeks: null,//近两周销量
+                        average_forever: null,//玩家平均总游戏时长
+                        median_forever: null//玩家中位总游戏时长
+                    },
+                    score:{
+                        addones:null //+1指数
+                    }
                 }
             }
         },
@@ -133,10 +170,21 @@
         methods:{
             getAppInfo:function(appid){
                 this.$http.get('https://api.dawoea.net/api/app/'+appid).then((res) => {
-                    this.app = res.data.data
+                    this.app = this.extend(res.data.data,this.appDefault)
                 }).catch(err => {
                     //console.log(err)
                 })
+            },
+            extend: function (userOption, defaultOption) {
+                if (!userOption) return defaultOption;
+                for (let key in defaultOption) {
+                    if (userOption[key] == null) {
+                        userOption[key] = defaultOption[key];
+                    } else if (typeof userOption[key] == "object") {
+                        this.extend(userOption[key], defaultOption[key]); //深度匹配
+                    }
+                }
+                return userOption;
             }
         }
     }
@@ -389,7 +437,7 @@
     }
 
     .basic-info .index-label{
-        width:301px;
+        width:356px;
         height:86px;
         line-height:86px;
         float:right;
@@ -398,8 +446,39 @@
         font-size:48px;
         text-align: right;
         position: relative;
-        padding-right:55px;
         margin-top:8px;
+        overflow: hidden;
+    }
+
+    .basic-info .index-label .addone-data{
+        position:absolute;
+        right:55px;
+        z-index:99;
+    }
+
+    .basic-info .index-label .addone{
+        position:absolute;
+        top:-8px;
+        left:-13px;
+        width:256px;
+        height: 100px;
+        transform:rotate(-30deg)
+    }
+
+    .basic-info .index-label .addone .addone-bg{
+        display:block;
+        font-size:46px;
+        line-height:47px;
+        text-align:left;
+    }
+
+    .basic-info .index-label .addone .addone-top{
+        color:#6BC2F3;
+    }
+
+    .basic-info .index-label .addone .addone-bottom{
+        padding-left:75px;
+        color:#377096;
     }
 
     .basic-info .index-label .text{

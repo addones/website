@@ -77,6 +77,8 @@
 
     .search-result .search-content .search-content-left .company {
         width:200px;
+        height:16px;
+        overflow: hidden;
         position:relative;
     }
 
@@ -84,7 +86,6 @@
         width: 172px;
         display:inline-block;
         overflow: hidden;
-        white-space: nowrap;
     }
 
     .search-result .search-content .search-content-right {
@@ -96,7 +97,7 @@
         line-height: 16px;
     }
 
-    .search-result .search-content .search-content-left .company span:not(:last-child):after {
+    .search-result .search-content .search-content-left .company span:not(:first-child):before {
         content: '/';
         margin: 0 5px;
     }
