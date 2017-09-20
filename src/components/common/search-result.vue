@@ -1,5 +1,5 @@
 <template>
-    <div class="search-result" v-if="item">
+    <div class="search-result" :key="item.appid">
         <div class="search-image left">
             <img :src="item.header" alt="" width="184" height="86">
         </div>
@@ -15,12 +15,12 @@
             <div class="search-content-left">
                 <h2 class="search-content-name">{{item.name}}</h2>
                 <div class="company">
-                    <p><span v-for="item in item.publishers">{{item}}</span></p>
+                    <span class="Max"><span v-for="item in item.publishers">{{item}}</span></span>
                 </div>
             </div>
         </div>
     
-        <router-link :to="{path:'/'}" class="search-button-purchase-big right">
+        <router-link :to="{name:'app',params:{appid:item.appid}}" class="search-button-purchase-big right">
             <em class="iconfont aone-steam"></em>
             <div class="particulars">详情</div>
             <em class="iconfont aone-enter"></em>
@@ -64,22 +64,28 @@
 
     .search-result .search-content {
         width: 550px;
-        height: 70px;
-        padding: 8px 16px 8px 16px;
+        height: 72px;
+        padding: 8px 16px 6px 16px;
         color: #fff;
         font-size: 14px;
     }
 
     .search-result .search-content .search-content-left {
         width: 425px;
-        height: 70px;
+        height: 72px;
     }
 
     .search-result .search-content .search-content-left .company {
-        width: 200px;
-        height: 16px;
+        width:200px;
+        height:16px;
         overflow: hidden;
-        white-space: nowrap;
+        position:relative;
+    }
+
+    .search-result .search-content .search-content-left .company span.Max{
+        width: 172px;
+        display:inline-block;
+        overflow: hidden;
     }
 
     .search-result .search-content .search-content-right {
@@ -91,7 +97,7 @@
         line-height: 16px;
     }
 
-    .search-result .search-content .search-content-left .company span:not(:last-child):after {
+    .search-result .search-content .search-content-left .company span:not(:first-child):before {
         content: '/';
         margin: 0 5px;
     }

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div id="Main-highlight">
-            <router-link to="/" class="return"><em class="iconfont aone-back"></em> 返回上一页</router-link>
+            <div class="return"><router-link to="/" class="return-button"><em class="iconfont aone-back"></em> 返回上一页</router-link></div>
             <search-result :item="highlight" v-if="highlight"></search-result>
         </div>
         <div id="Main-Contents">
@@ -63,7 +63,7 @@
                         this.Relevant = this.res.length>3?this.res.slice(0,5):this.res.slice(0,this.res.length)
                         //this.mescroll.triggerUpScroll() //主动调用上拉刷新
                         this.mescroll.lockUpScroll(false) //取消锁定上拉刷新
-                        this.mescroll.resetUpScroll()
+                        //this.mescroll.resetUpScroll()
                     }else{
                         console.log('game.null')
                     }
@@ -102,16 +102,11 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
-
-    #Main-highlight{
-        padding-top:23px;
-        height:257px;
-    }
+<style scoped>
 
     #Main-highlight .search-result{
         position:relative;
-        top:42px;
+        top:62px;
     }
 
     #Main-highlight .search-result .search-button-purchase-big{
@@ -129,11 +124,11 @@
         color: #fff;
     }
 
-    #Main-highlight .return{
-        margin-bottom:43px;
+    .return{
+        padding:23px;
     }
 
-    .return{
+    .return .return-button{
         display:block;
         width:120px;
         height:40px;
@@ -153,7 +148,6 @@
         font-weight:bold;
         left: 9px;
         text-indent:0;
-
     }
 
 </style>

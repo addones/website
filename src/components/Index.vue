@@ -4,17 +4,17 @@
     <ul class="banner">
       <li class="banner-left">
         <a href="#">
-          <img src="https://icdn.static.dawoea.net/steam/apps/585840/header.jpg" alt="">
+          <img src="https://steamcdn.static.addones.net/steam/apps/447040/header.jpg" alt="">
         </a>
       </li>
       <li class="banner-main">
         <a href="#">
-          <img src="https://icdn.static.dawoea.net/steam/apps/41070/header.jpg" alt="">
+          <img src="https://steamcdn.static.addones.net/steam/apps/349220/header.jpg" alt="">
         </a>
       </li>
       <li class="banner-right">
         <a href="#">
-          <img src="https://icdn.static.dawoea.net/steam/apps/302270/header.jpg" alt="">
+          <img src="https://steamcdn.static.addones.net/steam/apps/433850/header.jpg" alt="">
         </a>
       </li>
     </ul>
@@ -26,13 +26,14 @@
         <div class="thumbnail-title"><span @click="change(index)">{{item.name}}</span></div>
         <div class="thumbnail-list">
           <ul class="list-item">
-            <li v-for="item in item.data">
-              <a href="#">
-                <img :src="'https://icdn.static.dawoea.net/steam/apps/'+item.appid+'/header.jpg'" alt="" width="368" height="172">
+            <li v-for="item in item.data" :key="item.appid">
+              
+                <router-link :to="/app/+item.appid" v-if="item.appid">
+                <img :src="'https://icdn.static.dawoea.net/steam/apps/'+item.appid+'/header.jpg'" alt="">
                 <div class="thumbnail-info">
                     <div class="thumbnail-info-name"><span class="name">{{item.name}}</span><span class="thumbnail-info-time">{{item.released}}</span></div>
                 </div>
-              </a>
+              </router-link>
             </li>
           </ul>
         </div>
@@ -51,12 +52,20 @@ export default {
         {
           name : '近期作品',
           index:2,
-          data : []
+          data : [
+            {},
+            {},
+            {} 
+          ]
         },
         {
           name : '人气作品',
           index:2,
-          data : []
+          data : [
+            {},
+            {},
+            {}
+          ]
         }
       ],
       result:[]
@@ -99,8 +108,9 @@ export default {
   #Main-highlight ul.banner{
     width:1194px;
     height:215px;
-    margin:40px auto 0;
-    position:relative;    
+    margin:0 auto;
+    position:relative;
+    top:63px;
   }
 
   #Main-highlight ul.banner li{
@@ -161,6 +171,8 @@ export default {
 
 
   .thumbnail .thumbnail-list .list-item li {
+    width:368px;
+    height:172px;
     float: left;
     margin: 0 12px;
     border-radius: 5px;
@@ -169,14 +181,14 @@ export default {
   }
 
   .thumbnail .thumbnail-list .list-item li a {
-    width:368px;
-    height:172px;
     display: block;
     position: relative;
     
   }
 
   .thumbnail .thumbnail-list .list-item li a img {
+    width:368px;
+    height:172px;
     transition:all 0.5s;
   }
 
