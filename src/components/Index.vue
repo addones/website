@@ -27,9 +27,9 @@
         <div class="thumbnail-list">
           <ul class="list-item">
             <li v-for="item in item.data" :key="item.appid">
-              
+
                 <router-link :to="/app/+item.appid" v-if="item.appid">
-                <img :src="'https://icdn.static.dawoea.net/steam/apps/'+item.appid+'/header.jpg'" alt="">
+                <img :src="'https://icdn.static.addones.net/steam/apps/'+item.appid+'/header.jpg'" alt="">
                 <div class="thumbnail-info">
                     <div class="thumbnail-info-name"><span class="name">{{item.name}}</span><span class="thumbnail-info-time">{{item.released}}</span></div>
                 </div>
@@ -55,7 +55,7 @@ export default {
           data : [
             {},
             {},
-            {} 
+            {}
           ]
         },
         {
@@ -76,7 +76,7 @@ export default {
   },
   methods:{
     getIndex: function () {
-      this.$http.get("https://api.dawoea.net/api/entrance").then((res) => {
+      this.$http.get("https://api.addones.net/entrance").then((res) => {
         for(let object in res.data.data){
           this.result.push(res.data.data[object])
         }
@@ -143,7 +143,7 @@ export default {
     width:460px;
     height:215px;
   }
-  
+
   #Main-highlight ul.banner li.banner-right{
     right:0;
   }
@@ -183,7 +183,7 @@ export default {
   .thumbnail .thumbnail-list .list-item li a {
     display: block;
     position: relative;
-    
+
   }
 
   .thumbnail .thumbnail-list .list-item li a img {

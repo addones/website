@@ -56,7 +56,7 @@
                 this.highlight = null
                 this.Relevant = []
                 this.mescroll.lockUpScroll(true)
-                this.$http.get("https://api.addones.net/api/search/app?keywords="+this.search).then((res) => {
+                this.$http.get("https://api.addones.net/search/app?keywords="+this.search).then((res) => {
                     if(res.data.data.length>0){
                         this.res = res.data.data.slice(1,res.data.data.length)
                         this.highlight = res.data.data[0]

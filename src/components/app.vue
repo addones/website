@@ -27,7 +27,7 @@
                         <div class="icon iconfont aone-steam" :class="{support:app.common.platforms.linux}"></div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
         <div id="Main-Contents">
@@ -42,7 +42,7 @@
                             <li><img src="" alt=""></li>
                         </ul>
                     </div>
-                    
+
                 </div>
 
                 <div class="info-basic-producer basic-info">
@@ -169,7 +169,7 @@
         },
         methods:{
             getAppInfo:function(appid){
-                this.$http.get('https://api.dawoea.net/api/app/'+appid).then((res) => {
+                this.$http.get('https://api.addones.net/app/'+appid).then((res) => {
                     this.app = this.extend(res.data.data,this.appDefault)
                 }).catch(err => {
                     //console.log(err)
@@ -225,7 +225,7 @@
         text-overflow: ellipsis;
         overflow: hidden;
     }
-    
+
     .head-info .head-content span.Online-population{
         display:inline-block;
         height:27px;
@@ -501,7 +501,7 @@
         padding:36px 0 11px 0;
         overflow: hidden
     }
-    
+
     .index .index-item li{
         width:340px;
         height:111px;

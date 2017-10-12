@@ -18,10 +18,10 @@
         },
         methods: {
             isLogin: function () {
-                var url = "https://api.dawoea.net/user/me"
+                var url = "https://api.addones.net/user/me"
                 this.$http.get(url).then((res) => {
                     if(res.data.code === 200){
-                        
+
                     }else if(res.data.code === 401){
                         window.location.href = "https://account.addones.net/home"
                     }
