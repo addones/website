@@ -38,7 +38,7 @@
 
         <!-- 用户信息 -->
         <div class="user">
-          <a href="#">MaoLin</a>
+          <a>登录&ensp;|&ensp;注册</a>
         </div>
         <!-- 用户信息 end -->
 
@@ -59,7 +59,7 @@
       }
     },
     created() {
-      
+
     },
     methods: {
       submit:function(){
